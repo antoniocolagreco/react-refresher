@@ -1,0 +1,7 @@
+.layout {
+  margin: 0 auto;
+  max-width: 1800px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
