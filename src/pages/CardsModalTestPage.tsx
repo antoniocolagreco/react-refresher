@@ -6,11 +6,10 @@ import Card from '../components/Card'
 import { ModalContext } from '../context/ModalContext'
 import IconOK from '../icons/IconOK'
 import multiplyComponent from '../utils/mutiplyComponent'
-import styles from './App.module.css'
 
-type Props = {}
+type CardsModalTestPageProps = {}
 
-const App = (props: Props) => {
+const CardsModalTestPage = (props: CardsModalTestPageProps) => {
     const { showModal, hideModal } = useContext(ModalContext)
 
     const card = (
@@ -49,9 +48,9 @@ const App = (props: Props) => {
             <Helmet>
                 <title>Pagina di Prova per React!</title>
             </Helmet>
-            <div className={styles.container}>{multiplyComponent(card, 3)}</div>
+            {multiplyComponent(card, 3)}
         </Fragment>
     )
 }
 
-export default App
+export default CardsModalTestPage
