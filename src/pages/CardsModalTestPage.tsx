@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
-import { Fragment, useContext } from 'react'
+import { FC, Fragment, useContext } from 'react'
 import Button from '../components/Button'
 import Card from '../components/Card'
 import { ModalContext } from '../context/ModalContext'
@@ -9,7 +9,7 @@ import multiplyComponent from '../utils/mutiplyComponent'
 
 type CardsModalTestPageProps = {}
 
-const CardsModalTestPage = (props: CardsModalTestPageProps) => {
+const CardsModalTestPage: FC<CardsModalTestPageProps> = (props) => {
     const { showModal, hideModal } = useContext(ModalContext)
 
     const card = (
@@ -44,7 +44,7 @@ const CardsModalTestPage = (props: CardsModalTestPageProps) => {
     )
 
     return (
-        <Fragment>
+        <Fragment {...props}>
             <Helmet>
                 <title>Pagina di Prova per React!</title>
             </Helmet>

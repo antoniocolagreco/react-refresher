@@ -1,4 +1,4 @@
-const classes = (...names: Array<String | undefined>) => {
+const classes = (...names: Array<string | undefined>) => {
     let result = ''
 
     for (const name of names) {
