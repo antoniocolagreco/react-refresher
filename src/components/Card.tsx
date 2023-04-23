@@ -10,7 +10,7 @@ type CardProps = {
 const Card: FC<HTMLAttributes<HTMLBoxElement> & CardProps> = (props) => {
     const { title, ...otherProps } = props
     return (
-        <Box {...otherProps}>
+        <Box className={styles.card} {...otherProps}>
             <header className={styles.header}>
                 <h3 className={styles.title}>{props.title}</h3>
             </header>

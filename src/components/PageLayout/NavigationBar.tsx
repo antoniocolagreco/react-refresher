@@ -20,6 +20,9 @@ const NavigationBar: FC<HTMLAttributes<HTMLElement & NavigationBarProps>> = (pro
                 <li className={styles.navBarListItem}>
                     <NavBarLink to={RoutePaths.NEW_MEETUP}>New Meetup</NavBarLink>
                 </li>
+                <li className={styles.navBarListItem}>
+                    <NavBarLink to={RoutePaths.CARD_MODAL_TEST}>Test Card \ Modal</NavBarLink>
+                </li>
             </ul>
         </nav>
     )
