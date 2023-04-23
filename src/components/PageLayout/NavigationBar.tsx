@@ -10,14 +10,14 @@ const NavigationBar: FC<HTMLAttributes<HTMLElement & NavigationBarProps>> = (pro
     const { children, className, ...otherProps } = props
     return (
         <nav className={classes(styles.navigationBar, className)} {...otherProps}>
-            <ul>
-                <li>
+            <ul className={styles.navBarList}>
+                <li className={styles.navBarListItem}>
                     <NavBarLink to={RoutePaths.MEETUPS}>Meetups</NavBarLink>
                 </li>
-                <li>
+                <li className={styles.navBarListItem}>
                     <NavBarLink to={RoutePaths.FAVORITES}>Favorites</NavBarLink>
                 </li>
-                <li>
+                <li className={styles.navBarListItem}>
                     <NavBarLink to={RoutePaths.NEW_MEETUP}>New Meetup</NavBarLink>
                 </li>
             </ul>

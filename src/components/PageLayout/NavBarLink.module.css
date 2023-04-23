@@ -1,5 +1,26 @@
-.navBarLink {}
+.navBarLink {
+  display: block;
+  padding: 0.2rem 1rem;
+  border-radius: 100vh;
+  font-weight: 400;
+  text-decoration: none;
+  transition: all 0.1s ease-out;
+}
+
+.navBarLink:visited,
+.navBarLink:link {
+  color: var(--color-grape-0);
+
+}
+
+.navBarLink:hover {
+  color: var(--color-grape-9);
+  background-color: var(--color-grape-0);
+}
 
 .pending {}
 
-.active {}
+.active {
+  color: var(--color-grape-0);
+  background-color: var(--color-grape-6);
+}

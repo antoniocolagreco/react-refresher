@@ -24,6 +24,10 @@
   --color-grape-9: #862e9c;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background: white;
   font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

@@ -10,16 +10,18 @@ type PageLayoutProps = {}
 const PageLayout: FC<HTMLAttributes<HTMLElement & PageLayoutProps>> = (props) => {
     const { children, className, ...otherProps } = props
     return (
-        <div className={classes(styles.layout, className)} {...otherProps}>
+        <div className={classes(styles.layoutContainer, className)} {...otherProps}>
             <Helmet>
                 <title>React Refresher</title>
                 <link rel="icon" type="image/svg+xml" href="/react.svg" />
             </Helmet>
-            <header>
+            <header className={styles.layoutHeader}>
                 <NavigationBar></NavigationBar>
             </header>
-            <Outlet />
-            <footer></footer>
+            <main className={styles.layoutMain}>
+                <Outlet />
+            </main>
+            <footer className={styles.layoutFooter}></footer>
         </div>
     )
 }

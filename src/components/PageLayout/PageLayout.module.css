@@ -1,7 +1,33 @@
-.layout {
+.layoutContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-gray-0);
+}
+
+.layoutHeader {
+  display: block;
+  background-color: var(--color-grape-9);
+  color: var(--color-graper-0);
+  padding: 1rem;
+}
+
+.layoutMain {
   margin: 0 auto;
+  padding: 1rem;
   max-width: 1800px;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
+  flex-grow: 1;
+  background-color: var(--color-gray-0);
+  color: var(--color-gray-9);
+}
+
+.layoutFooter {
+  display: block;
+  background-color: var(--color-grape-9);
+  color: var(--color-graper-0);
+  padding: 1rem;
 }

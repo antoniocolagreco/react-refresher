@@ -1,1 +1,17 @@
-.navigationBar {}
+.navigationBar {
+  margin: 0 auto;
+  max-width: 1800px;
+}
+
+.navBarList {
+  padding-left: 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
+  align-items: center;
+}
+
+.navBarListItem {
+  list-style-type: none;
+}
