@@ -1,6 +1,9 @@
 .navigationBar {
   margin: 0 auto;
   max-width: 1800px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .navBarList {
@@ -14,4 +17,10 @@
 
 .navBarListItem {
   list-style-type: none;
+}
+
+.title {
+  color: white;
+  display: inline;
+  margin: 0 1rem;
 }

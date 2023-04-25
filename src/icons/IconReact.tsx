@@ -1,10 +1,10 @@
 import { FC, HTMLAttributes } from 'react'
 
-const IconClose: FC<HTMLAttributes<SVGElement>> = (props) => {
+const IconReact: FC<HTMLAttributes<SVGElement>> = (props) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="35.93"
+            width="32"
             height="32"
             preserveAspectRatio="xMidYMid meet"
             viewBox="0 0 256 228"
@@ -14,4 +14,4 @@ const IconClose: FC<HTMLAttributes<SVGElement>> = (props) => {
     )
 }
 
-export default IconClose
+export default IconReact
