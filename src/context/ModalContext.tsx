@@ -2,7 +2,7 @@ import { FC, ReactNode, createContext, useState } from 'react'
 import Modal from '../components/Modal'
 
 export interface ModalContextInterface {
-    showModal: (content: ReactNode, title?: string) => void
+    showModal: (content: ReactNode, title?: string, onOverlayClick?: () => void) => void
     hideModal: () => void
 }
 
@@ -33,7 +33,7 @@ const ModalContextProvider: FC<ModalContextProviderProps> = (props) => {
     return (
         <ModalContext.Provider value={{ showModal, hideModal }} {...otherProps}>
             {children}
-            <Modal title={title} visible={visible}>
+            <Modal title={title} visible={visible} onOverlayClick={hideModal}>
                 {content}
             </Modal>
         </ModalContext.Provider>

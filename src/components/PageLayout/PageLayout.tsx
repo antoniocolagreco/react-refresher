@@ -1,7 +1,9 @@
 import classes from '@utils/classes'
 import { FC, HTMLAttributes } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
+import RoutePaths from '../../constants/RoutePaths'
+import ActionsBar from './ActionsBar'
 import NavigationBar from './NavigationBar'
 import styles from './PageLayout.module.css'
 
@@ -9,6 +11,9 @@ type PageLayoutProps = {}
 
 const PageLayout: FC<HTMLAttributes<HTMLElement & PageLayoutProps>> = (props) => {
     const { children, className, ...otherProps } = props
+    const { pathname } = useLocation()
+    const currentRoute = pathname.substring(1)
+
     return (
         <div className={classes(styles.layoutContainer, className)} {...otherProps}>
             <Helmet>
@@ -16,8 +21,13 @@ const PageLayout: FC<HTMLAttributes<HTMLElement & PageLayoutProps>> = (props) =>
                 <link rel="icon" type="image/svg+xml" href="/react.svg" />
             </Helmet>
             <header className={styles.layoutHeader}>
-                <NavigationBar></NavigationBar>
+                <NavigationBar />
             </header>
+            {(currentRoute === RoutePaths.MEETUPS || currentRoute === RoutePaths.FAVORITES) && (
+                <div className={styles.layoutSubHeader}>
+                    <ActionsBar />
+                </div>
+            )}
             <main className={styles.layoutMain}>
                 <Outlet />
             </main>

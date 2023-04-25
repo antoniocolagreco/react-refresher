@@ -1,0 +1,15 @@
+.actionsBar {
+  margin: 0 auto;
+  max-width: 1800px;
+}
+
+.actionsBarList {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+}
+
+.actionsBarListItem {
+  list-style-type: none;
+}

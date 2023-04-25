@@ -8,17 +8,12 @@ type MeetupsPageProps = {}
 
 const MeetupsPage: FC<HTMLAttributes<HTMLDivElement & MeetupsPageProps>> = (props) => {
     const { children, className, ...otherProps } = props
-    const { meetups, deleteMeetup, updateMeetup } = useContext(MeetupsContext)
+    const { meetups } = useContext(MeetupsContext)
 
     return (
         <div className={classes(styles.cardsContainer, className)} {...otherProps}>
             {meetups.map((meetup) => (
-                <MeetupCard
-                    meetup={meetup}
-                    key={meetup.id}
-                    onDelete={() => deleteMeetup(meetup.id)}
-                    onFavorite={() => updateMeetup({ ...meetup, favorite: !meetup.favorite })}
-                />
+                <MeetupCard meetup={meetup} key={meetup.id} />
             ))}
         </div>
     )

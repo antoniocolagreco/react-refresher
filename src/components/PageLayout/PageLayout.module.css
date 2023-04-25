@@ -13,6 +13,14 @@
   box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.2);
 }
 
+.layoutSubHeader {
+  display: block;
+  background-color: var(--color-violet-9);
+  color: var(--color-violet-0);
+  padding: 0.5rem 1rem;
+  box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.2);
+}
+
 .layoutMain {
   margin: 1rem auto 0;
   padding: 1rem;
