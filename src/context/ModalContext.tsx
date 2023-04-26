@@ -21,9 +21,11 @@ const ModalContextProvider: FC<ModalContextProviderProps> = (props) => {
     const [content, setContent] = useState<ReactNode>(undefined)
     const [title, setTitle] = useState<string | undefined>(undefined)
 
-    const hideModal = () => {
+    const hideModal = (event?: React.UIEvent) => {
+        if (event?.currentTarget !== event?.target) return
         setVisible(false)
     }
+
     const showModal = (content: ReactNode, title?: string) => {
         setContent(content)
         setTitle(title)

@@ -1,10 +1,10 @@
-import { FC, HTMLAttributes } from 'react'
+import { ButtonHTMLAttributes, FC } from 'react'
 import classes from '../utils/classes'
 import styles from './Button.module.css'
 
 type ButtonProps = {}
 
-const Button: FC<HTMLAttributes<HTMLButtonElement & ButtonProps>> = (props) => {
+const Button: FC<ButtonHTMLAttributes<HTMLButtonElement & ButtonProps>> = (props) => {
     const { children, className, ...otherProps } = props
     return (
         <button className={classes(styles.button, className)} {...otherProps}>

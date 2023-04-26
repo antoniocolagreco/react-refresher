@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import PageLayout from './components/PageLayout/PageLayout'
+import PageLayout from './components/Layout/PageLayout'
 import RoutePaths from './constants/RoutePaths'
 import CardsModalTestPage from './pages/CardsModalTestPage'
 import ErrorPage from './pages/ErrorPage'

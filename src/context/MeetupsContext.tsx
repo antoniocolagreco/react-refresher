@@ -34,8 +34,12 @@ const MeetupsContextProvider: FC<MeetupsProviderProps> = (props) => {
         saveMeetups(newMeetups)
     }
 
-    const updateMeetup = (meetupToUpdate: Meetup) => {
-        const newMeetups = [...meetups.filter((meetup: Meetup) => meetup.id !== meetupToUpdate.id), meetupToUpdate]
+    const updateMeetup = (newMeetup: Meetup) => {
+        const newMeetups = [...meetups]
+        const meetupToReplace = newMeetups.find((m) => m.id === newMeetup.id)
+        if (meetupToReplace === undefined) return
+        const indexOfmeetupToReplace = newMeetups.indexOf(meetupToReplace)
+        newMeetups.splice(indexOfmeetupToReplace, 1, newMeetup)
         setMeetups(newMeetups)
         saveMeetups(newMeetups)
     }

@@ -1,11 +1,21 @@
 .meetupCard {
   min-width: 18rem;
   max-width: 22rem;
-  flex-grow: 1;
   border-radius: 5px 1rem 1rem 1rem;
   margin: 0;
   padding: 0;
   background-color: var(--color-gray-0);
+  transition: all 0.1s ease-in;
+}
+
+.meetupCard.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.meetupCard.visible {
+  visibility: visible;
+  opacity: 1;
 }
 
 .header {
@@ -83,9 +93,4 @@
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 1rem;
-}
-
-.questionBold {
-  font-weight: 600;
-  color: var(--color-grape-9);
 }

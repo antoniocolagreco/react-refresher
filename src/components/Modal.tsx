@@ -6,7 +6,7 @@ import styles from './Modal.module.css'
 type ModalProps = {
     title?: string | undefined
     visible?: boolean | undefined
-    onOverlayClick?: () => void | undefined
+    onOverlayClick?: (() => void) | undefined
 }
 
 const Modal: FC<HTMLAttributes<HTMLDivElement> & ModalProps> = (props) => {

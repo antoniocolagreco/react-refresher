@@ -3,17 +3,23 @@
   background-color: transparent;
   cursor: pointer;
   border-radius: 100vw;
-  fill: var(--color-gray-7);
   transition: all 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0.2rem;
-  /* background-color: var(--color-grape-1); */
 }
 
-.iconButton:hover,
-.iconButton:active {
+.iconToggle.on {
+  fill: var(--color-grape-9);
+}
+
+.iconToggle.off {
+  fill: var(--color-gray-7);
+}
+
+.iconToggle:hover,
+.iconToggle:active {
   background-color: var(--color-grape-1);
   fill: var(--color-grape-9);
 }

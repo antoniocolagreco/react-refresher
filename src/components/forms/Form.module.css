@@ -1,0 +1,35 @@
+.meetupForm {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: 1rem;
+  column-gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.meetupForm label {
+  justify-self: end;
+}
+
+.meetupForm textarea {
+  min-height: 8rem;
+}
+
+.buttonsContainer {
+  grid-column: span 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.button {
+  min-width: 8rem;
+}
+
+.icon {
+  fill: var(--color-grape-0);
+}
+
+.questionBold {
+  font-weight: 600;
+  color: var(--color-grape-9);
+}

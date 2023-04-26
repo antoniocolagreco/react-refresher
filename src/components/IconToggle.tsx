@@ -11,7 +11,7 @@ type IconToggleProps = {
 const IconToggle: FC<HTMLAttributes<HTMLButtonElement> & IconToggleProps> = (props) => {
     const { children, onIcon, offIcon, state, className, ...otherProps } = props
     return (
-        <button className={classes(styles.iconToggle, className)} {...otherProps}>
+        <button className={classes(styles.iconToggle, state ? styles.on : styles.off, className)} {...otherProps}>
             {state ? onIcon : offIcon}
         </button>
     )
