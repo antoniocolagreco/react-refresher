@@ -1,9 +1,10 @@
 import { FC, ReactNode, createContext, useState } from 'react'
-import { loadMeetups, loadMockMeetups, saveID, saveMeetups } from '../data/localStorage'
+import { loadID, loadMeetups, loadMockMeetups, saveID, saveMeetups } from '../data/localStorage'
 import { Meetup } from '../types/types'
 
 export interface MeetupsContextInterface {
     meetups: Array<Meetup>
+    getNewMeetup: () => Meetup
     addMeetup: (meetup: Meetup) => void
     updateMeetup: (meetup: Meetup) => void
     deleteMeetup: (id: number) => void
@@ -12,6 +13,15 @@ export interface MeetupsContextInterface {
 
 const defaultMeetupsContext: MeetupsContextInterface = {
     meetups: [],
+    getNewMeetup: () => ({
+        id: loadID(),
+        title: '',
+        image: '',
+        date: '',
+        address: '',
+        description: '',
+        favorite: false,
+    }),
     addMeetup: () => {},
     updateMeetup: () => {},
     deleteMeetup: () => {},
@@ -26,6 +36,16 @@ export type MeetupsProviderProps = {
 
 const MeetupsContextProvider: FC<MeetupsProviderProps> = (props) => {
     const [meetups, setMeetups] = useState(loadMeetups())
+
+    const getNewMeetup = (): Meetup => ({
+        id: loadID() + 1,
+        title: '',
+        image: '',
+        date: '',
+        address: '',
+        description: '',
+        favorite: false,
+    })
 
     const addMeetup = (meetup: Meetup) => {
         const newMeetups = [...meetups, meetup]
@@ -56,7 +76,7 @@ const MeetupsContextProvider: FC<MeetupsProviderProps> = (props) => {
     }
 
     return (
-        <MeetupsContext.Provider value={{ meetups, addMeetup, deleteMeetup, updateMeetup, resetMeetups }}>
+        <MeetupsContext.Provider value={{ meetups, addMeetup, deleteMeetup, updateMeetup, resetMeetups, getNewMeetup }}>
             {props.children}
         </MeetupsContext.Provider>
     )

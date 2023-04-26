@@ -6,7 +6,7 @@ import styles from './MeetupsPage.module.css'
 
 type MeetupsPageProps = {}
 
-const MeetupsPage: FC<HTMLAttributes<HTMLDivElement & MeetupsPageProps>> = (props) => {
+const MeetupsPage: FC<HTMLAttributes<HTMLDivElement> & MeetupsPageProps> = (props) => {
     const { children, className, ...otherProps } = props
     const { meetups } = useContext(MeetupsContext)
 

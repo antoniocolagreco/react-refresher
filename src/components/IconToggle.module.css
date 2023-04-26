@@ -18,7 +18,11 @@
   fill: var(--color-gray-7);
 }
 
-.iconToggle:hover,
+.iconToggle:hover
+{
+  background-color: var(--color-grape-1);
+  fill: var(--color-grape-9);
+}
 .iconToggle:active {
   background-color: var(--color-grape-1);
   fill: var(--color-grape-9);

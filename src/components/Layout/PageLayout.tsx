@@ -23,7 +23,7 @@ const PageLayout: FC<HTMLAttributes<HTMLElement & PageLayoutProps>> = (props) =>
             <header className={styles.layoutHeader}>
                 <NavigationBar />
             </header>
-            {(currentRoute === RoutePaths.MEETUPS || currentRoute === RoutePaths.FAVORITES) && (
+            {currentRoute === RoutePaths.MEETUPS && (
                 <div className={styles.layoutSubHeader}>
                     <ActionsBar />
                 </div>
