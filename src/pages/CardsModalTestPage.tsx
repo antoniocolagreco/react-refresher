@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet-async'
 
 import { FC, Fragment, useContext } from 'react'
 import Button from '../components/Button'
@@ -46,9 +45,6 @@ const CardsModalTestPage: FC<CardsModalTestPageProps> = (props) => {
 
     return (
         <Fragment {...props}>
-            <Helmet>
-                <title>Pagina di Prova per React!</title>
-            </Helmet>
             <div className={styles.cardsContainer}>{multiplyComponent(card, 10)}</div>
         </Fragment>
     )

@@ -1,6 +1,6 @@
 import classes from '@utils/classes'
 import { FC, HTMLAttributes } from 'react'
-import styles from './Page.module.css'
+import styles from './ErrorPage.module.css'
 
 type ErrorPageProps = {}
 
