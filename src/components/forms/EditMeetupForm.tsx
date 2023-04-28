@@ -4,6 +4,7 @@ import IconClose from '../../icons/IconClose'
 import IconOK from '../../icons/IconOK'
 import { Meetup } from '../../types/types'
 import Button from '../Button'
+import DatePicker from '../DatePicker'
 import styles from './Form.module.css'
 
 type EditMeetupFormProps = {
@@ -21,6 +22,14 @@ const EditMeetupForm: FC<Omit<HTMLAttributes<HTMLFormElement>, 'onSubmit'> & Edi
         setCurrentMeetup((prevState) => ({
             ...prevState,
             [name]: value,
+        }))
+    }
+
+    const dateChangeHandler = (date: Date | null) => {
+        if (!date) return
+        setCurrentMeetup((prevState) => ({
+            ...prevState,
+            date: date,
         }))
     }
 
@@ -54,13 +63,7 @@ const EditMeetupForm: FC<Omit<HTMLAttributes<HTMLFormElement>, 'onSubmit'> & Edi
                 onChange={(e) => inputChangeHandler(e)}
             />
             <label htmlFor="date">Date:</label>
-            <input
-                type="text"
-                id="date"
-                name="date"
-                value={currentMeetup.date}
-                onChange={(e) => inputChangeHandler(e)}
-            />
+            <DatePicker id="date" name="date" value={currentMeetup.date} onChange={dateChangeHandler} />
             <label htmlFor="address">Address:</label>
             <input
                 type="text"

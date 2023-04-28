@@ -28,10 +28,10 @@
   min-width: 18rem;
   min-height: 10rem;
   padding: 1rem;
-  border: 1px solid var(--color-grape-9);
   border-radius: 1rem;
   cursor: default;
-  overflow: hidden;
+  /* border: 1px solid var(--color-grape-9); */
+  /* overflow: hidden; */
 }
 
 .header {
@@ -39,10 +39,16 @@
   padding: 1rem;
   overflow: hidden;
   margin: -1rem -1rem 0 -1rem;
+  border-radius: 1rem 1rem 0 0;
 }
 
 .title {
+  border-radius: 1rem;
   margin: 0;
   font-size: 1.5rem;
   color: var(--color-grape-0);
+}
+
+body.modalOpen {
+  overflow: hidden;
 }

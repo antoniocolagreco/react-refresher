@@ -32,7 +32,10 @@ export const loadMeetups = (): Array<Meetup> => {
         meetups = meetupsMockData
     }
     if (meetupsQuery) {
-        meetups = JSON.parse(meetupsQuery)
+        const parsedMeetups: Array<Meetup> = JSON.parse(meetupsQuery)
+        for (let meetup of parsedMeetups) {
+            meetups.push({ ...meetup, date: new Date(meetup.date) })
+        }
     }
     return meetups
 }

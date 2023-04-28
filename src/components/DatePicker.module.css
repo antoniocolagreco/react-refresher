@@ -1,0 +1,12 @@
+.container {
+  display: inline-flex;
+  position: relative;
+}
+
+.dateTimePicker {
+  width: 100%;
+}
+
+.react-datetime-picker {
+  background-color: aqua;
+}

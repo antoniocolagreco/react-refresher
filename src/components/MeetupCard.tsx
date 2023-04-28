@@ -7,6 +7,7 @@ import IconEdit from '../icons/IconEdit'
 import IconFavorite from '../icons/IconFavorite'
 import IconNotFavorite from '../icons/IconNotFavorite'
 import { Meetup } from '../types/types'
+import formatDate from '../utils/formatDate'
 import Box from './Box'
 import IconButton from './IconButton'
 import IconToggle from './IconToggle'
@@ -77,7 +78,7 @@ const MeetupCard: FC<HTMLAttributes<HTMLDivElement> & MeetupCardProps> = (props)
                     <h3 className={styles.title}>{meetup.title}</h3>
                 </header>
                 <main>
-                    <p className={styles.date}>{meetup.date}</p>
+                    <p className={styles.date}>{formatDate(meetup.date)}</p>
                     <p className={styles.address}>{meetup.address}</p>
                     <p className={styles.description}>{meetup.description}</p>
                 </main>
