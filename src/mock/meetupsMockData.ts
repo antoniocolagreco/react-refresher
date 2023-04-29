@@ -1,8 +1,7 @@
 import { Meetup } from '../types/types'
 
-const meetupsMockData: Array<Meetup> = [
+const meetupsMockData: Array<Partial<Meetup>> = [
     {
-        id: 1,
         title: 'React Meetup',
         image: 'https://picsum.photos/id/1000/640/360',
         address: '123 Main St, New York, NY',
@@ -11,7 +10,6 @@ const meetupsMockData: Array<Meetup> = [
         favorite: false,
     },
     {
-        id: 2,
         title: 'JavaScript Conference',
         image: 'https://picsum.photos/id/1001/640/360',
         address: '456 5th Ave, San Francisco, CA',
@@ -20,7 +18,6 @@ const meetupsMockData: Array<Meetup> = [
         favorite: false,
     },
     {
-        id: 3,
         title: 'Vue.js Workshop',
         image: 'https://picsum.photos/id/1002/640/360',
         address: '789 Maple St, Toronto, ON',
@@ -29,7 +26,6 @@ const meetupsMockData: Array<Meetup> = [
         favorite: false,
     },
     {
-        id: 4,
         title: 'Node.js Meetup',
         image: 'https://picsum.photos/id/1003/640/360',
         address: '234 Oak St, Seattle, WA',
@@ -38,7 +34,6 @@ const meetupsMockData: Array<Meetup> = [
         favorite: false,
     },
     {
-        id: 5,
         title: 'Angular Conference',
         image: 'https://picsum.photos/id/1004/640/360',
         address: '567 Pine St, Chicago, IL',
@@ -47,7 +42,6 @@ const meetupsMockData: Array<Meetup> = [
         favorite: false,
     },
     {
-        id: 6,
         title: 'Web Design Workshop',
         image: 'https://picsum.photos/id/1005/640/360',
         address: '901 Elm St, Boston, MA',
@@ -56,7 +50,6 @@ const meetupsMockData: Array<Meetup> = [
         favorite: false,
     },
     {
-        id: 7,
         title: 'React Native Meetup',
         image: 'https://picsum.photos/id/1006/640/360',
         address: '345 Maple St, Miami, FL',
@@ -65,7 +58,6 @@ const meetupsMockData: Array<Meetup> = [
         favorite: false,
     },
     {
-        id: 8,
         title: 'UX Design Conference',
         image: 'https://picsum.photos/id/1011/640/360',
         address: '678 Oak St, Los Angeles, CA',
@@ -74,7 +66,6 @@ const meetupsMockData: Array<Meetup> = [
         favorite: false,
     },
     {
-        id: 9,
         title: 'JavaScript Meetup',
         image: 'https://picsum.photos/id/1008/640/360',
         address: '910 Pine St, Vancouver, BC',
@@ -83,7 +74,6 @@ const meetupsMockData: Array<Meetup> = [
         favorite: false,
     },
     {
-        id: 10,
         title: 'Frontend Development Workshop',
         image: 'https://picsum.photos/id/1009/640/360',
         address: '123 Elm St, Austin, TX',

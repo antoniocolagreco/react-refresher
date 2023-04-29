@@ -22,4 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-*.development
+@REM *.production
+@REM *.development

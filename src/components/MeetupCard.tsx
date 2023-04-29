@@ -8,9 +8,10 @@ import IconFavorite from '../icons/IconFavorite'
 import IconNotFavorite from '../icons/IconNotFavorite'
 import { Meetup } from '../types/types'
 import formatDate from '../utils/formatDate'
-import Box from './Box'
+import Box, { HTMLBoxElement } from './Box'
 import IconButton from './IconButton'
 import IconToggle from './IconToggle'
+import Image from './Image'
 import styles from './MeetupCard.module.css'
 import DeleteMeetupForm from './forms/DeleteMeetupForm'
 import EditMeetupForm from './forms/EditMeetupForm'
@@ -19,7 +20,7 @@ type MeetupCardProps = {
     meetup: Meetup
 }
 
-const MeetupCard: FC<HTMLAttributes<HTMLDivElement> & MeetupCardProps> = (props) => {
+const MeetupCard: FC<HTMLAttributes<HTMLBoxElement> & MeetupCardProps> = (props) => {
     const { className, meetup, ...otherProps } = props
     const [visible, setVisible] = useState(false)
     const { showModal, hideModal } = useContext(ModalContext)
@@ -31,7 +32,7 @@ const MeetupCard: FC<HTMLAttributes<HTMLDivElement> & MeetupCardProps> = (props)
                 key={meetup.id}
                 meetup={meetup}
                 onSubmit={() => {
-                    deleteMeetup(meetup.id)
+                    deleteMeetup(meetup)
                     hideModal()
                 }}
                 onCancel={hideModal}
@@ -46,8 +47,8 @@ const MeetupCard: FC<HTMLAttributes<HTMLDivElement> & MeetupCardProps> = (props)
             <EditMeetupForm
                 key={meetup.id}
                 meetup={meetup}
-                onSubmit={(meetup: Meetup) => {
-                    updateMeetup(meetup)
+                onSubmit={(m) => {
+                    updateMeetup(m)
                     hideModal()
                 }}
                 onCancel={hideModal}
@@ -63,37 +64,30 @@ const MeetupCard: FC<HTMLAttributes<HTMLDivElement> & MeetupCardProps> = (props)
     }
 
     return (
-        <div
+        <Box
             className={classes(styles.meetupCard, visible ? styles.visible : styles.hidden, className)}
             {...otherProps}
         >
-            <Box className={styles.meetupCard} {...otherProps}>
-                <header className={styles.header}>
-                    <img
-                        className={styles.image}
-                        src={meetup.image}
-                        onLoad={() => setVisible(true)}
-                        onError={() => setVisible(true)}
-                    ></img>
-                    <h3 className={styles.title}>{meetup.title}</h3>
-                </header>
-                <main>
-                    <p className={styles.date}>{formatDate(meetup.date)}</p>
-                    <p className={styles.address}>{meetup.address}</p>
-                    <p className={styles.description}>{meetup.description}</p>
-                </main>
-                <footer className={styles.footer}>
-                    <IconButton icon={<IconClose />} onClick={(e) => deleteHandler(e)} />
-                    <IconButton icon={<IconEdit />} onClick={(e) => editHandler(e)} />
-                    <IconToggle
-                        onIcon={<IconFavorite />}
-                        offIcon={<IconNotFavorite />}
-                        state={meetup.favorite}
-                        onClick={favoriteHandler}
-                    />
-                </footer>
-            </Box>
-        </div>
+            <header className={styles.header}>
+                <Image src={meetup.image} onLoad={() => setVisible(true)} onError={() => setVisible(true)} />
+                <h3 className={styles.title}>{meetup.title}</h3>
+            </header>
+            <main>
+                <p className={styles.date}>{formatDate(meetup.date)}</p>
+                <p className={styles.address}>{meetup.address}</p>
+                <p className={styles.description}>{meetup.description}</p>
+            </main>
+            <footer className={styles.footer}>
+                <IconButton icon={<IconClose />} onClick={(e) => deleteHandler(e)} />
+                <IconButton icon={<IconEdit />} onClick={(e) => editHandler(e)} />
+                <IconToggle
+                    onIcon={<IconFavorite />}
+                    offIcon={<IconNotFavorite />}
+                    state={meetup.favorite}
+                    onClick={favoriteHandler}
+                />
+            </footer>
+        </Box>
     )
 }
 

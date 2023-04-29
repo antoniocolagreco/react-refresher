@@ -1,4 +1,4 @@
-import { FC, ReactNode, createContext, useState } from 'react'
+import { FC, ReactNode, createContext, useEffect, useState } from 'react'
 import Modal from '../components/Modal'
 
 export interface ModalContextInterface {
@@ -20,6 +20,17 @@ const ModalContextProvider: FC<ModalContextProviderProps> = (props) => {
     const [visible, setVisible] = useState(false)
     const [content, setContent] = useState<ReactNode>(undefined)
     const [title, setTitle] = useState<string | undefined>(undefined)
+
+    useEffect(() => {
+        document.addEventListener('keydown', escapeHandler)
+        return () => {
+            document.removeEventListener('keydown', escapeHandler)
+        }
+    }, [])
+
+    const escapeHandler = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') setVisible(false)
+    }
 
     const hideModal = (event?: React.UIEvent) => {
         if (event?.currentTarget !== event?.target) return

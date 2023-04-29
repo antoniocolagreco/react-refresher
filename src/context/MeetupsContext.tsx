@@ -1,5 +1,6 @@
-import { FC, ReactNode, createContext, useState } from 'react'
-import { loadID, loadMeetups, loadMockMeetups, saveID, saveMeetups } from '../data/localStorage'
+import { FC, ReactNode, createContext, useEffect, useState } from 'react'
+
+import { fb_addMeetup, fb_deleteMeeup, fb_getAllMeetups, fb_resetMeetups, fb_updateMeetup } from '../data/firebase'
 import { Meetup } from '../types/types'
 
 export interface MeetupsContextInterface {
@@ -7,14 +8,14 @@ export interface MeetupsContextInterface {
     getNewMeetup: () => Meetup
     addMeetup: (meetup: Meetup) => void
     updateMeetup: (meetup: Meetup) => void
-    deleteMeetup: (id: number) => void
+    deleteMeetup: (meetup: Meetup) => void
     resetMeetups: () => void
 }
 
 const defaultMeetupsContext: MeetupsContextInterface = {
     meetups: [],
     getNewMeetup: () => ({
-        id: loadID(),
+        id: '',
         title: '',
         image: '',
         date: new Date(),
@@ -35,10 +36,17 @@ export type MeetupsProviderProps = {
 }
 
 const MeetupsContextProvider: FC<MeetupsProviderProps> = (props) => {
-    const [meetups, setMeetups] = useState(loadMeetups())
+    const [meetups, setMeetups] = useState<Array<Meetup>>([])
+
+    useEffect(() => {
+        ;(async () => {
+            const newMeetups = await fb_getAllMeetups()
+            setMeetups(newMeetups)
+        })()
+    }, [])
 
     const getNewMeetup = (): Meetup => ({
-        id: loadID() + 1,
+        id: '',
         title: '',
         image: '',
         date: new Date(),
@@ -47,32 +55,24 @@ const MeetupsContextProvider: FC<MeetupsProviderProps> = (props) => {
         favorite: false,
     })
 
-    const addMeetup = (meetup: Meetup) => {
-        const newMeetups = [...meetups, meetup]
+    const addMeetup = async (meetup: Meetup) => {
+        const newMeetups = await fb_addMeetup(meetups, meetup)
         setMeetups(newMeetups)
-        saveID(meetup.id)
-        saveMeetups(newMeetups)
     }
 
-    const updateMeetup = (newMeetup: Meetup) => {
-        const newMeetups = [...meetups]
-        const meetupToReplace = newMeetups.find((m) => m.id === newMeetup.id)
-        if (meetupToReplace === undefined) return
-        const indexOfmeetupToReplace = newMeetups.indexOf(meetupToReplace)
-        newMeetups.splice(indexOfmeetupToReplace, 1, newMeetup)
+    const updateMeetup = async (meetup: Meetup) => {
+        const newMeetups = await fb_updateMeetup(meetups, meetup)
         setMeetups(newMeetups)
-        saveMeetups(newMeetups)
     }
 
-    const deleteMeetup = (id: number) => {
-        const newMeetups = meetups.filter((meetup) => meetup.id !== id)
+    const deleteMeetup = async (meetup: Meetup) => {
+        const newMeetups = await fb_deleteMeeup(meetups, meetup)
         setMeetups(newMeetups)
-        saveMeetups(newMeetups)
     }
 
-    const resetMeetups = () => {
-        const newMeetups = loadMockMeetups()
-        setMeetups(newMeetups)
+    const resetMeetups = async () => {
+        const newMeetupso = await fb_resetMeetups()
+        setMeetups(newMeetupso)
     }
 
     return (
