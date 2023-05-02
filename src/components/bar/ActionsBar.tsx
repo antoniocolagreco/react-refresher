@@ -1,11 +1,11 @@
+import NavBarButton from '@components/bar/NavBarButton'
+import EditMeetupForm from '@components/form/EditMeetupForm'
+import { MeetupsContext } from '@context/MeetupsContext'
+import { ModalContext } from '@context/ModalContext'
+import classes from '@utils/classes'
 import { FC, HTMLAttributes, useContext } from 'react'
-import { MeetupsContext } from '../../context/MeetupsContext'
-import { ModalContext } from '../../context/ModalContext'
 import { Meetup } from '../../types/types'
-import classes from '../../utils/classes'
-import EditMeetupForm from '../forms/EditMeetupForm'
-import styles from './ActionsBar.module.css'
-import NavBarButton from './NavBarButton'
+import styles from './NavBar.module.css'
 
 type ActionsBarProps = {}
 
@@ -30,12 +30,12 @@ const ActionsBar: FC<HTMLAttributes<HTMLDivElement> & ActionsBarProps> = (props)
     }
 
     return (
-        <div className={classes(styles.actionsBar, className)} {...otherProps}>
-            <ul className={styles.actionsBarList}>
-                <li className={styles.actionsBarListItem}>
+        <div className={classes(styles.subNavBar, className)} {...otherProps}>
+            <ul className={styles.subNavBarList}>
+                <li className={styles.subNavBarListItem}>
                     <NavBarButton onClick={addNewMeetupHandler}>New Meetup</NavBarButton>
                 </li>
-                <li className={styles.actionsBarListItem}>
+                <li className={styles.subNavBarListItem}>
                     <NavBarButton onClick={resetMeetups}>Reset</NavBarButton>
                 </li>
             </ul>

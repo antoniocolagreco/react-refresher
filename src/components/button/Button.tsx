@@ -1,5 +1,5 @@
+import classes from '@utils/classes'
 import { ButtonHTMLAttributes, FC } from 'react'
-import classes from '../utils/classes'
 import styles from './Button.module.css'
 
 type ButtonProps = {}

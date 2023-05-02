@@ -1,6 +1,6 @@
 // import { process } from 'NodeJS.Process'
 
-import meetupsMockData from '../mock/meetupsMockData'
+import meetupsMockData from '@mock/meetupsMockData'
 import { FirebaseMeetupData, FirebaseNewMeetupResponseID, Meetup } from '../types/types'
 
 const FIREBASE_URL: string = import.meta.env.VITE_FIREBASE_URL

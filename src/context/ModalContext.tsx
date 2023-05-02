@@ -1,5 +1,5 @@
+import Modal from '@components/modal/Modal'
 import { FC, ReactNode, createContext, useEffect, useState } from 'react'
-import Modal from '../components/Modal'
 
 export interface ModalContextInterface {
     showModal: (content: ReactNode, title?: string, onOverlayClick?: () => void) => void

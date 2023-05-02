@@ -1,5 +1,5 @@
+import classes from '@utils/classes'
 import { FC, HTMLAttributes } from 'react'
-import classes from '../utils/classes'
 import styles from './Box.module.css'
 
 export interface HTMLBoxElement extends HTMLDivElement {}

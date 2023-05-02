@@ -24,3 +24,23 @@
   display: inline;
   margin: 0;
 }
+
+.subNavBar {
+  margin: 0 auto;
+  max-width: 1800px;
+}
+
+.subNavBarList {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+}
+
+.subNavBarList.inverted {
+  justify-content: flex-end;
+}
+
+.subNavBarListItem {
+  list-style-type: none;
+}

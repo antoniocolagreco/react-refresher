@@ -1,6 +1,5 @@
+import Box, { HTMLBoxElement } from '@components/box/Box'
 import { FC, HTMLAttributes } from 'react'
-
-import Box, { HTMLBoxElement } from './Box'
 import styles from './Card.module.css'
 
 type CardProps = {

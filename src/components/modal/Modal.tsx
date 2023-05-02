@@ -1,6 +1,6 @@
+import classes from '@utils/classes'
 import { FC, HTMLAttributes, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import classes from '../utils/classes'
 import styles from './Modal.module.css'
 
 type ModalProps = {

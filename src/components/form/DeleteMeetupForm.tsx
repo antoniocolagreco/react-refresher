@@ -1,14 +1,14 @@
+import Button from '@components/button/Button'
+import IconClose from '@icons/IconClose'
+import IconDelete from '@icons/IconDelete'
 import classes from '@utils/classes'
 import { FC, HTMLAttributes } from 'react'
-import IconClose from '../../icons/IconClose'
-import IconDelete from '../../icons/IconDelete'
 import { Meetup } from '../../types/types'
-import Button from '../Button'
 import styles from './Form.module.css'
 
 type DeleteMeetupFormProps = {
     meetup: Meetup
-    onSubmit: ((id: number) => void) | (() => void)
+    onSubmit: ((id: string) => void) | (() => void)
     onCancel: () => void
 }
 

@@ -1,5 +1,5 @@
+import classes from '@utils/classes'
 import { FC, HTMLAttributes } from 'react'
-import classes from '../../utils/classes'
 import styles from './NavBarButton.module.css'
 
 type NavBarButtonProps = {}

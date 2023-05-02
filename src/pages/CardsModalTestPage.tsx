@@ -1,9 +1,8 @@
-
+import Button from '@components/button/Button'
+import Card from '@components/card/Card'
+import { ModalContext } from '@context/ModalContext'
+import IconOK from '@icons/IconOK'
 import { FC, Fragment, useContext } from 'react'
-import Button from '../components/Button'
-import Card from '../components/Card'
-import { ModalContext } from '../context/ModalContext'
-import IconOK from '../icons/IconOK'
 import multiplyComponent from '../utils/mutiplyComponent'
 import styles from './CardsModalTestPage.module.css'
 

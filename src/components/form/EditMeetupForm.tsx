@@ -1,10 +1,10 @@
+import Button from '@components/button/Button'
+import DatePicker from '@components/date/DatePicker'
+import IconClose from '@icons/IconClose'
+import IconOK from '@icons/IconOK'
 import classes from '@utils/classes'
 import { FC, HTMLAttributes, useState } from 'react'
-import IconClose from '../../icons/IconClose'
-import IconOK from '../../icons/IconOK'
 import { Meetup } from '../../types/types'
-import Button from '../Button'
-import DatePicker from '../DatePicker'
 import styles from './Form.module.css'
 
 type EditMeetupFormProps = {

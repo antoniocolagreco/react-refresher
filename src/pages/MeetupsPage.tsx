@@ -1,7 +1,7 @@
+import MeetupCard from '@components/card/MeetupCard'
+import { MeetupsContext } from '@context/MeetupsContext'
+import classes from '@utils/classes'
 import { FC, HTMLAttributes, useContext } from 'react'
-import MeetupCard from '../components/MeetupCard'
-import { MeetupsContext } from '../context/MeetupsContext'
-import classes from '../utils/classes'
 import styles from './MeetupsPage.module.css'
 
 type MeetupsPageProps = {}
