@@ -15,3 +15,7 @@ export type FirebaseMeetupData = {
 export type FirebaseNewMeetupResponseID = {
     name: string
 }
+
+export type HCWorkerMessage = {
+    value: number
+}

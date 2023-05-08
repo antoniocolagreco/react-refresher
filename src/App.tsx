@@ -7,7 +7,7 @@ import { FC } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import MeetupsPageLayout from './components/layout/MeetupsPageLayout'
 import MoreHooksPageLayout from './components/layout/MoreHooksPageLayout'
-import UseMemoPage from './pages/UseMemoPage'
+import UseTransitionPage from './pages/UseTransitionPage'
 
 type AppProps = {}
 
@@ -24,8 +24,8 @@ const App: FC<AppProps> = (props) => {
                     <Route path={RoutePaths.CARD_MODAL_TEST} element={<CardsModalTestPage />} />
                 </Route>
                 <Route path={RoutePaths.MORE_HOOKS} element={<MoreHooksPageLayout />}>
-                    <Route index element={<Navigate to={RoutePaths.USE_MEMO} replace />} />
-                    <Route path={RoutePaths.USE_MEMO} element={<UseMemoPage />} />
+                    <Route index element={<Navigate to={RoutePaths.USE_TRANSITION} replace />} />
+                    <Route path={RoutePaths.USE_TRANSITION} element={<UseTransitionPage />} />
                 </Route>
                 <Route path="*" element={<ErrorPage />} />
             </Route>

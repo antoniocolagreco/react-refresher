@@ -16,6 +16,12 @@
   font-weight: 500;
 }
 
+button.button:disabled {
+  background-color: var(--color-gray-3);
+  color: var(--color-gray-6);
+  cursor: not-allowed;
+}
+
 .button:hover,
 .button:active {
   background-color: var(--color-grape-7);

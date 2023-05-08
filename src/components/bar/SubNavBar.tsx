@@ -12,7 +12,7 @@ const SubNavBar: FC<HTMLAttributes<HTMLElement> & SubNavBarProps> = (props) => {
         <nav className={classes(styles.subNavBar, className)} {...otherProps}>
             <ul className={classes(styles.subNavBarList, styles.inverted)}>
                 <li className={styles.subNavBarListItem}>
-                    <NavBarLink to={RoutePaths.USE_MEMO}>useMemo</NavBarLink>
+                    <NavBarLink to={RoutePaths.USE_TRANSITION}>useTransition</NavBarLink>
                 </li>
             </ul>
         </nav>
