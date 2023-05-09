@@ -57,8 +57,8 @@ const UseTransitionPage: FC<HTMLAttributes<HTMLDivElement> & UseTransitionPagePr
     }
 
     const generate = () => {
-        const workerURL = new URL('../workers/generateNamesWorker.ts', import.meta.url)
-        const worker = new Worker(workerURL, { type: 'module' })
+        const workerURL = new URL('../workers/generateNames.ts', import.meta.url)
+        const worker = new Worker(workerURL, { type: 'classic' })
 
         worker.onmessage = (e) => {
             const names = e.data as Array<string>

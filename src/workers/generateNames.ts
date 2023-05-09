@@ -1,4 +1,73 @@
-import Letter from '@classes/Letter'
+/// DICHIARAZIONE CLASSE LETTER
+
+class Letter {
+    private value: string
+    private vocal: boolean
+    private consonant: boolean
+    private endSyllable: boolean
+    private endWord: boolean
+    private startSyllable: boolean
+    private startWord: boolean
+    private nextCompatibleLetters: Array<Letter>
+
+    constructor(
+        value: string,
+        vocal: boolean,
+        consonant: boolean,
+        endSyllable: boolean,
+        endWord: boolean,
+        startSyllable: boolean,
+        startWord: boolean,
+        nextCompatibleLetters: Array<Letter>
+    ) {
+        this.value = value
+        this.vocal = vocal
+        this.consonant = consonant
+        this.vocal = vocal
+        this.endSyllable = endSyllable
+        this.endWord = endWord
+        this.startSyllable = startSyllable
+        this.startWord = startWord
+        this.nextCompatibleLetters = nextCompatibleLetters
+    }
+
+    public toString() {
+        return this.value
+    }
+
+    public isVocal(): boolean {
+        return this.vocal
+    }
+    public isConsonant(): boolean {
+        return this.consonant
+    }
+
+    public canEndSyllable(): boolean {
+        return this.endSyllable
+    }
+
+    public canEndWord(): boolean {
+        return this.endWord
+    }
+
+    public canStartSyllable(): boolean {
+        return this.startSyllable
+    }
+
+    public canStartWord(): boolean {
+        return this.startWord
+    }
+
+    public getNextCompatibleLetters(): Array<Letter> {
+        return this.nextCompatibleLetters
+    }
+
+    public setNextCompatibleLetters(nextCompatibleLetters: Array<Letter>): void {
+        this.nextCompatibleLetters = nextCompatibleLetters
+    }
+}
+
+/// CREAZIONE LETTERS
 
 const a = new Letter('a', true, false, true, true, true, true, [])
 const e = new Letter('e', true, false, true, true, true, true, [])
@@ -30,6 +99,8 @@ const s = new Letter('s', false, true, false, false, true, true, [])
 const h = new Letter('h', false, true, false, false, false, false, [])
 
 const alphabet = [a, b, c, d, e, f, g, h, i, l, m, n, o, p, q, r, s, t, u, v, z]
+
+/// CONFIGURAZIONE LETTERS
 
 a.setNextCompatibleLetters([e, i, u, b, c, d, f, g, l, m, n, p, q, r, s, t, v, z])
 e.setNextCompatibleLetters([a, i, o, u, b, c, d, f, g, l, m, n, p, q, r, s, t, v, z])
@@ -88,8 +159,6 @@ const generateName = (startingName: string = '', maxLength: number = 10, minLegt
     cLog(`Il nome finale è: ${name}`)
     return name
 }
-
-export default generateName
 
 const addLetter = (currentName?: string) => {
     const name = currentName || ''
@@ -226,7 +295,6 @@ const addLetter = (currentName?: string) => {
                     )
                     compatible = false
                 }
-                // snqui
             }
         }
     }
@@ -263,4 +331,22 @@ const cLog = (string: string) => {
     if (DEBUG_MODE) {
         cLog(string)
     }
+}
+
+onmessage = (e) => {
+    const event = e as MessageEvent<GenerateNamesWorkerData>
+    const { maxNumberOfCharacters, minNumberOfCharacters, numberOfNames, startingName } = event.data
+    const names: Array<string> = []
+    for (let index = 0; index < numberOfNames; index++) {
+        const name = generateName(startingName, maxNumberOfCharacters, minNumberOfCharacters)
+        names.push(name)
+    }
+    postMessage(names)
+}
+
+type GenerateNamesWorkerData = {
+    numberOfNames: number
+    startingName: string
+    minNumberOfCharacters: number
+    maxNumberOfCharacters: number
 }
