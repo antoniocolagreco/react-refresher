@@ -14,6 +14,9 @@ const SubNavBar: FC<HTMLAttributes<HTMLElement> & SubNavBarProps> = (props) => {
                 <li className={styles.subNavBarListItem}>
                     <NavBarLink to={RoutePaths.USE_TRANSITION}>useTransition</NavBarLink>
                 </li>
+                <li className={styles.subNavBarListItem}>
+                    <NavBarLink to={RoutePaths.USE_REDUCER}>useReducer</NavBarLink>
+                </li>
             </ul>
         </nav>
     )

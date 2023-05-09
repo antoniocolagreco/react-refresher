@@ -73,7 +73,7 @@ const a = new Letter('a', true, false, true, true, true, true, [])
 const e = new Letter('e', true, false, true, true, true, true, [])
 const i = new Letter('i', true, false, true, true, true, true, [])
 const o = new Letter('o', true, false, true, true, true, true, [])
-const u = new Letter('u', true, false, true, true, true, true, [])
+const u = new Letter('u', true, false, true, false, true, true, [])
 
 const b = new Letter('b', false, true, false, false, true, true, [])
 const d = new Letter('d', false, true, false, false, true, true, [])
@@ -128,6 +128,8 @@ z.setNextCompatibleLetters([a, e, i, o, u, z])
 const DEBUG_MODE = false
 
 const generateName = (startingName: string = '', maxLength: number = 10, minLegth: number = 3): string => {
+    cClear()
+
     let name = startingName
     const numberOfCharacters = getRandomNumber(
         maxLength,
@@ -329,7 +331,13 @@ const getLetterFromString = (string: string, fromEnd: number = 1): Letter | null
 
 const cLog = (string: string) => {
     if (DEBUG_MODE) {
-        cLog(string)
+        console.log(string)
+    }
+}
+
+const cClear = () => {
+    if (DEBUG_MODE) {
+        console.clear()
     }
 }
 

@@ -3,13 +3,13 @@
 import meetupsMockData from '@mock/meetupsMockData'
 import { FirebaseMeetupData, FirebaseNewMeetupResponseID, Meetup } from '../types/types'
 
-const FIREBASE_URL: string = import.meta.env.VITE_FIREBASE_URL
+const VITE_FIREBASE_DATABASE_URL: string = import.meta.env.VITE_FIREBASE_DATABASE_URL
 const MEETUPS = 'meetups'
 
 export const fb_addMeetup = async (inputArray: Array<Meetup>, meetup: Meetup): Promise<Array<Meetup>> => {
     const meetupsArray = [...inputArray]
     try {
-        const response = await fetch(`${FIREBASE_URL}${MEETUPS}.json`, {
+        const response = await fetch(`${VITE_FIREBASE_DATABASE_URL}${MEETUPS}.json`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export const fb_updateMeetup = async (inputArray: Array<Meetup>, meetupToUpdate:
         if (meetupToUpdateIndex < 0) throw new Error('Meetup index not found')
         meetupsArray.splice(meetupToUpdateIndex, 1, meetupToUpdate)
 
-        const response = await fetch(`${FIREBASE_URL}${MEETUPS}/${meetupToUpdate.id}.json`, {
+        const response = await fetch(`${VITE_FIREBASE_DATABASE_URL}${MEETUPS}/${meetupToUpdate.id}.json`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export const fb_updateMeetup = async (inputArray: Array<Meetup>, meetupToUpdate:
 export const fb_deleteMeeup = async (inputArray: Array<Meetup>, meetupToDelete: Meetup): Promise<Array<Meetup>> => {
     const meetupsArray = inputArray.filter((currentMeetup) => currentMeetup.id !== meetupToDelete.id)
     try {
-        const response = await fetch(`${FIREBASE_URL}${MEETUPS}/${meetupToDelete.id}.json`, {
+        const response = await fetch(`${VITE_FIREBASE_DATABASE_URL}${MEETUPS}/${meetupToDelete.id}.json`, {
             method: 'DELETE',
         })
         if (!response.ok) {
@@ -70,7 +70,7 @@ export const fb_deleteMeeup = async (inputArray: Array<Meetup>, meetupToDelete: 
 
 export const fb_getAllMeetups = async (): Promise<Array<Meetup>> => {
     try {
-        const response = await fetch(`${FIREBASE_URL}${MEETUPS}.json`, {
+        const response = await fetch(`${VITE_FIREBASE_DATABASE_URL}${MEETUPS}.json`, {
             method: 'GET',
         })
         if (!response.ok) {
@@ -92,7 +92,7 @@ export const fb_getAllMeetups = async (): Promise<Array<Meetup>> => {
 export const fb_resetMeetups = async (): Promise<Array<Meetup>> => {
     const newMeetups: Array<Meetup> = []
     try {
-        const response = await fetch(`${FIREBASE_URL}${MEETUPS}.json`, {
+        const response = await fetch(`${VITE_FIREBASE_DATABASE_URL}${MEETUPS}.json`, {
             method: 'DELETE',
         })
         if (!response.ok) {
@@ -100,7 +100,7 @@ export const fb_resetMeetups = async (): Promise<Array<Meetup>> => {
         }
 
         const promises = meetupsMockData.map(async (meetup) => {
-            const response = await fetch(`${FIREBASE_URL}${MEETUPS}.json`, {
+            const response = await fetch(`${VITE_FIREBASE_DATABASE_URL}${MEETUPS}.json`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

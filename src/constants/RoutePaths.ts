@@ -6,6 +6,7 @@ enum RoutePaths {
     CARD_MODAL_TEST = 'card-modal-test',
     MORE_HOOKS = 'more-hooks',
     USE_TRANSITION = 'use-transition',
+    USE_REDUCER = 'use-reducer',
 }
 
 export default RoutePaths
