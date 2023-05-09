@@ -62,9 +62,11 @@ const UseTransitionPage: FC<HTMLAttributes<HTMLDivElement> & UseTransitionPagePr
 
         worker.onmessage = (e) => {
             const names = e.data as Array<string>
-            startTransition(() => {
-                setNames(names)
-            })
+            setTimeout(() => {
+                startTransition(() => {
+                    setNames(names)
+                })
+            }, 1)
         }
 
         const data = {
@@ -88,6 +90,7 @@ const UseTransitionPage: FC<HTMLAttributes<HTMLDivElement> & UseTransitionPagePr
                         size={numberOfNamesSize}
                         type="number"
                         min={1}
+                        max={10000}
                         step={1}
                     />
                     <span>parole contenenti</span>
