@@ -4,7 +4,7 @@ import { MeetupsContext } from '@context/MeetupsContext'
 import { ModalContext } from '@context/ModalContext'
 import classes from '@utils/classes'
 import { FC, HTMLAttributes, useContext } from 'react'
-import { Meetup } from '../../types/types'
+import { Meetup } from '../../types/Meetup'
 import styles from './NavBar.module.css'
 
 type ActionsBarProps = {}

@@ -1,4 +1,4 @@
-import { Meetup } from '../types/types'
+import { Meetup } from '../types/Meetup'
 
 const meetupsMockData: Array<Partial<Meetup>> = [
     {

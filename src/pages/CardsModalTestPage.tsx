@@ -27,7 +27,7 @@ const CardsModalTestPage: FC<CardsModalTestPageProps> = (props) => {
                                 quaerat culpa repellendus, voluptatem soluta, maxime at veritatis temporibus ex in
                                 nostrum repellat! Deserunt dolore consequuntur hic culpa maiores.
                             </p>
-                            <Button onClick={() => hideModal()}>
+                            <Button onClick={() => hideModal()} className={styles.viewButton}>
                                 <IconOK style={{ width: '2rem', height: '2rem', fill: 'var(--color-grape-0)' }} />
                                 OK
                             </Button>
@@ -35,6 +35,7 @@ const CardsModalTestPage: FC<CardsModalTestPageProps> = (props) => {
                         'Titolo di prova'
                     )
                 }
+                className={styles.viewButton}
             >
                 <IconOK style={{ width: '2rem', height: '2rem', fill: 'var(--color-grape-0)' }} />
                 View

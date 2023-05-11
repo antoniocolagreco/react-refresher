@@ -3,7 +3,7 @@ import IconClose from '@icons/IconClose'
 import IconDelete from '@icons/IconDelete'
 import classes from '@utils/classes'
 import { FC, HTMLAttributes } from 'react'
-import { Meetup } from '../../types/types'
+import { Meetup } from '../../types/Meetup'
 import styles from './Form.module.css'
 
 type DeleteMeetupFormProps = {

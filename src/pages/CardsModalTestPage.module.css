@@ -4,3 +4,7 @@
   justify-items: center;
   gap: 1rem;
 }
+
+.viewButton {
+  margin: 0 auto;
+}

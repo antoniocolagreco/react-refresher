@@ -13,7 +13,7 @@ import IconNotFavorite from '@icons/IconNotFavorite'
 import classes from '@utils/classes'
 import formatDate from '@utils/formatDate'
 import { FC, HTMLAttributes, useContext, useState } from 'react'
-import { Meetup } from '../../types/types'
+import { Meetup } from '../../types/Meetup'
 import styles from './MeetupCard.module.css'
 
 type MeetupCardProps = {

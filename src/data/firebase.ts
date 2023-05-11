@@ -1,7 +1,5 @@
-// import { process } from 'NodeJS.Process'
-
 import meetupsMockData from '@mock/meetupsMockData'
-import { FirebaseMeetupData, FirebaseNewMeetupResponseID, Meetup } from '../types/types'
+import { Meetup } from '../types/Meetup'
 
 const VITE_FIREBASE_DATABASE_URL: string = import.meta.env.VITE_FIREBASE_DATABASE_URL
 const MEETUPS = 'meetups'
@@ -19,7 +17,7 @@ export const fb_addMeetup = async (inputArray: Array<Meetup>, meetup: Meetup): P
         if (!response.ok) {
             throw new Error('Network error')
         }
-        const data = await (response.json() as Promise<FirebaseMeetupData>)
+        const data = await (response.json() as Promise<Record<string, Meetup>>)
         const newMeetup = { ...meetup, id: Object.keys(data)[0] }
         meetupsArray.push(newMeetup)
     } catch (error) {
@@ -76,7 +74,7 @@ export const fb_getAllMeetups = async (): Promise<Array<Meetup>> => {
         if (!response.ok) {
             throw new Error('Network response was not ok')
         }
-        const data = await (response.json() as Promise<FirebaseMeetupData>)
+        const data = await (response.json() as Promise<Record<string, Meetup>>)
         const meetups = Object.entries(data).map(([id, meetup]) => ({
             ...meetup,
             date: new Date(meetup.date),
@@ -110,7 +108,7 @@ export const fb_resetMeetups = async (): Promise<Array<Meetup>> => {
             if (!response.ok) {
                 throw new Error('Network response was not ok')
             }
-            const data = await (response.json() as Promise<FirebaseNewMeetupResponseID>)
+            const data = await (response.json() as Promise<{ name: string }>)
             const newMeetup = { ...meetup, id: data.name } as Meetup
             newMeetups.push(newMeetup)
         })

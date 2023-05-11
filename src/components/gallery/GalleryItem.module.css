@@ -1,0 +1,73 @@
+.galleryItem {
+  display: block;
+  overflow: hidden;
+  border-radius: 1rem;
+  min-width: 200px;
+  height: 200px;
+}
+
+
+.figure {
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: all 0.3s ease-in;
+}
+
+.figure.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.figure.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+
+.image {
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+
+.figcaption {
+  font-family: "Verdana";
+  font-size: 0.75rem;
+  padding: 3rem 1rem 1rem 1rem;
+  color: var(--color-gray-0);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, var(--color-gray-9), var(--color-transparent));
+  text-shadow: 0 0 5px #000;
+  z-index: 1;
+}
+
+.spanTwoCol {
+  grid-column: span 2;
+}
+
+.spanTwoRow {
+  grid-row: span 2;
+  height: auto;
+}
+
+
+@media screen and (max-width:500px) {
+  .spanTwoCol {
+    grid-column: span 1;
+  }
+
+  .spanTwoRow {
+    grid-row: span 1;
+
+  }
+
+
+}

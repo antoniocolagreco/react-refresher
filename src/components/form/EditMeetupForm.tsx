@@ -4,7 +4,7 @@ import IconClose from '@icons/IconClose'
 import IconOK from '@icons/IconOK'
 import classes from '@utils/classes'
 import { FC, HTMLAttributes, useState } from 'react'
-import { Meetup } from '../../types/types'
+import { Meetup } from '../../types/Meetup'
 import styles from './Form.module.css'
 
 type EditMeetupFormProps = {

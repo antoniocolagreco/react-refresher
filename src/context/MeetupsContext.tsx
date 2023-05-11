@@ -1,7 +1,7 @@
 import { FC, ReactNode, createContext, useEffect, useState } from 'react'
 
 import { fb_addMeetup, fb_deleteMeeup, fb_getAllMeetups, fb_resetMeetups, fb_updateMeetup } from '../data/firebase'
-import { Meetup } from '../types/types'
+import { Meetup } from '../types/Meetup'
 
 export interface MeetupsContextInterface {
     meetups: Array<Meetup>
