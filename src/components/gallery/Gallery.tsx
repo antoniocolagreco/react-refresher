@@ -1,14 +1,21 @@
 import classes from '@utils/classes'
 import { FC, HTMLAttributes } from 'react'
+import { PexelsPhoto } from '../../types/pexels'
 import styles from './Gallery.module.css'
+import GalleryItem from './GalleryItem'
 
-type GalleryProps = {}
+type GalleryProps = {
+    photos: PexelsPhoto[]
+}
 
 const Gallery: FC<HTMLAttributes<HTMLDivElement> & GalleryProps> = (props) => {
-    const { children, className, ...otherProps } = props
+    const { photos, children, className, ...otherProps } = props
+
     return (
         <div className={classes(styles.gallery, className)} {...otherProps}>
-            {children}
+            {photos.map((photo) => (
+                <GalleryItem key={photo.id} photo={photo} />
+            ))}
         </div>
     )
 }

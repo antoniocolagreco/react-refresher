@@ -13,11 +13,6 @@ const GalleryItem: FC<AnchorHTMLAttributes<HTMLAnchorElement> & GalleryItemProps
     const { children, style, photo, className, figureClass, imgClass, ...otherProps } = props
     const [visible, setVisible] = useState(false)
 
-    const show = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-        console.log(visible)
-        setVisible(true)
-    }
-
     const proportions = photo.width / photo.height
 
     let src = `${photo.src.original}?auto=compress&cs=tinysrgb&dpr=1&w=500`
@@ -42,8 +37,8 @@ const GalleryItem: FC<AnchorHTMLAttributes<HTMLAnchorElement> & GalleryItemProps
                     src={src}
                     alt={photo.alt}
                     className={classes(styles.image, imgClass)}
-                    onLoad={show}
-                    onError={show}
+                    onLoad={() => setVisible(true)}
+                    onError={() => setVisible(true)}
                 />
                 <figcaption className={styles.figcaption}>{`${photo.alt} by ${photo.photographer}`}</figcaption>
             </figure>

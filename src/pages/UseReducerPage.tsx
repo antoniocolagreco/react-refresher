@@ -1,34 +1,55 @@
 import classes from '@utils/classes'
-import { ChangeEvent, FC, FormEvent, HTMLAttributes, useReducer } from 'react'
+import { ChangeEvent, FC, FormEvent, HTMLAttributes, useEffect, useReducer, useRef } from 'react'
 import Button from '../components/button/Button'
 import Gallery from '../components/gallery/Gallery'
-import GalleryItem from '../components/gallery/GalleryItem'
 import Input from '../components/input/Input'
 import Option from '../components/select/Option'
 import Select from '../components/select/Select'
-import { pexelsSearchPhotos } from '../data/pexels'
-import IconCalendar from '../icons/IconCalendar'
+import { morePexelsPhotos, searchPexelsPhotos } from '../data/pexels'
+
+import IconSearch from '../icons/IconSearch'
 import {
     ERROR,
     INITIAL_STATE,
-    SEARCH,
-    SET_PARAMETERS,
+    LOADING,
+    MORE,
+    PARAMETERS,
     SUCCESS,
     pexelsPhotosReducer,
 } from '../reducers/pexelsPhotosReducer'
-import { PexelsColor, PexelsLocale, PexelsOrientation, PexelsPerPage, PexelsSize } from '../types/pexels'
-import numbers from '../utils/numbers'
+import { PexelsColor, PexelsLocale, PexelsOrientation, PexelsSize } from '../types/pexels'
 import styles from './UseReducerPage.module.css'
 
 const UseReducerPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
     const { children, className, ...otherProps } = props
     const [state, dispatch] = useReducer(pexelsPhotosReducer, INITIAL_STATE)
+    const endRef = useRef<HTMLDivElement>(null)
+    const observerRef = useRef<IntersectionObserver | null>(null)
+
+    useEffect(() => {
+        const observerCallback: IntersectionObserverCallback = () => {
+            loadMore()
+        }
+
+        console.log('Observer: instanziamento')
+        observerRef.current = new IntersectionObserver(observerCallback)
+
+        if (endRef.current) {
+            observerRef.current.observe(endRef.current)
+        }
+
+        return () => {
+            console.log('Observer: disconnecting')
+            observerRef.current?.disconnect()
+        }
+    }, [])
 
     const formSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        dispatch({ type: SEARCH })
-        pexelsSearchPhotos(state)
+        dispatch({ type: LOADING })
+        searchPexelsPhotos(state)
             .then((response) => {
+                console.log(response)
                 dispatch({ type: SUCCESS, payload: response })
             })
             .catch((error) => {
@@ -37,14 +58,14 @@ const UseReducerPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
     }
 
     const onQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch({ type: SET_PARAMETERS, payload: { query: e.target.value } })
+        dispatch({ type: PARAMETERS, payload: { query: e.target.value } })
     }
 
     const onOrientationChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = e.target.value as PexelsOrientation
         if (Object.values(PexelsOrientation).includes(selectedValue)) {
             dispatch({
-                type: SET_PARAMETERS,
+                type: PARAMETERS,
                 payload: { orientation: selectedValue },
             })
         }
@@ -53,14 +74,14 @@ const UseReducerPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
     const onSizeChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = e.target.value as PexelsSize
         if (Object.values(PexelsSize).includes(selectedValue)) {
-            dispatch({ type: SET_PARAMETERS, payload: { size: selectedValue } })
+            dispatch({ type: PARAMETERS, payload: { size: selectedValue } })
         }
     }
 
     const onColorChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = e.target.value as PexelsColor
         if (Object.values(PexelsColor).includes(selectedValue)) {
-            dispatch({ type: SET_PARAMETERS, payload: { color: selectedValue } })
+            dispatch({ type: PARAMETERS, payload: { color: selectedValue } })
         }
     }
 
@@ -68,18 +89,32 @@ const UseReducerPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
         const selectedValue = e.target.value as PexelsLocale
         if (Object.values(PexelsLocale).includes(selectedValue)) {
             dispatch({
-                type: SET_PARAMETERS,
+                type: PARAMETERS,
                 payload: { locale: selectedValue },
             })
         }
+        console.log(state)
     }
 
-    const onPhotosPerPageChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        const selectedValue = Number.parseInt(e.target.value) as PexelsPerPage
-        dispatch({
-            type: SET_PARAMETERS,
-            payload: { per_page: selectedValue },
-        })
+    const loadMore = () => {
+        console.log('loadmore')
+        console.log(state)
+        if (state.total_results === 0 || !state.next_page) return
+        dispatch({ type: LOADING })
+        morePexelsPhotos(state.next_page)
+            .then((response) => {
+                const allPhotos = [...state.photos, ...response.photos]
+                dispatch({
+                    type: MORE,
+                    payload: {
+                        ...response,
+                        photos: allPhotos,
+                    },
+                })
+            })
+            .catch((error) => {
+                dispatch({ type: ERROR })
+            })
     }
 
     return (
@@ -87,11 +122,11 @@ const UseReducerPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
             <form className={styles.form} onSubmit={formSubmitHandler}>
                 <span className={styles.inputContainer}>
                     <a href="https://www.pexels.com" target="_blank" className={styles.logo}>
-                        <img src="https://images.pexels.com/lib/api/pexels.png" />
+                        <img src="https://images.pexels.com/lib/api/pexels.png" alt="Pexels logo" />
                     </a>
                     <Input name="query" onChange={onQueryChange} value={state.query} />
                     <Button type="submit" disabled={state.loading}>
-                        <IconCalendar className={styles.icon} />
+                        <IconSearch className={styles.icon} />
                         Search
                     </Button>
                 </span>
@@ -117,8 +152,8 @@ const UseReducerPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
                         </Select>
                     </span>
                     <span className={styles.optionContainer}>
-                        <label htmlFor="size">Color</label>
-                        <Select name="size" onChange={onColorChange} value={state.color}>
+                        <label htmlFor="color">Color</label>
+                        <Select name="color" onChange={onColorChange} value={state.color}>
                             {Object.entries(PexelsColor).map(([key, value]) => (
                                 <Option key={value} value={value}>
                                     {key}
@@ -136,23 +171,20 @@ const UseReducerPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
                             ))}
                         </Select>
                     </span>
-                    <span className={styles.optionContainer}>
-                        <label htmlFor="locale">Per page photos</label>
-                        <Select name="locale" onChange={onPhotosPerPageChange} value={state.per_page}>
-                            {numbers(15, 80).map((number) => (
-                                <Option key={number} value={number}>
-                                    {number}
-                                </Option>
-                            ))}
-                        </Select>
+                </div>
+                <div>
+                    <span>
+                        <span>Total results:</span>
+                        <span>{state.total_results}</span>
+                    </span>
+                    <span>
+                        <span>Current page:</span>
+                        <span>{state.page}</span>
                     </span>
                 </div>
             </form>
-            <Gallery>
-                {state.photos.map((photo) => (
-                    <GalleryItem key={photo.id} photo={photo} />
-                ))}
-            </Gallery>
+            <Gallery photos={state.photos} />
+            <div ref={endRef} />
         </div>
     )
 }

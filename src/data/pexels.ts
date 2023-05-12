@@ -15,42 +15,32 @@ const generateSearchUrl = (parameters: PexelsSearchParameters): string => {
     return url
 }
 
-export const pexelsSearchPhotos = async (parameters: PexelsSearchParameters): Promise<PexelsSearchResponse> => {
-    // try {
+export const searchPexelsPhotos = async (parameters: PexelsSearchParameters): Promise<PexelsSearchResponse> => {
+    console.log('searchPexelsPhotos')
     const headers = new Headers({ Authorization: PEXELS_API_KEY })
     const generatedURL = generateSearchUrl(parameters)
-    console.log(generatedURL) 
     const response = await fetch(generatedURL, {
         headers: headers,
         method: 'GET',
     })
     return response.json()
-    //     if (!response.ok) {
-    //         throw new Error('Network response was not ok')
-    //     }
-    //     const data = await (response.json() as Promise<PexelsSearchResponse>)
-    //     return data
-    // } catch (error) {
-    //     console.error((error as Error).message)
-    //     return { total_results: 0, page: 0, per_page: 0, photos: [] }
-    // }
 }
 
-export const pexelsGetPhoto = async (id: number): Promise<PexelsPhoto | null> => {
-    // try {
+export const morePexelsPhotos = async (next: string): Promise<PexelsSearchResponse> => {
+    console.log('morePexelsPhotos')
+    const headers = new Headers({ Authorization: PEXELS_API_KEY })
+    const response = await fetch(next, {
+        headers: headers,
+        method: 'GET',
+    })
+    return response.json()
+}
+
+export const getPexelsPhoto = async (id: number): Promise<PexelsPhoto | null> => {
     const headers = new Headers({ Authorization: PEXELS_API_KEY })
     const response = await fetch(PEXELS_GET_PHOTO_URL + id, {
         headers: headers,
         method: 'GET',
     })
     return response.json()
-    //     if (!response.ok) {
-    //         throw new Error('Network response was not ok')
-    //     }
-    //     const data = await (response.json() as Promise<PexelsPhoto>)
-    //     return data
-    // } catch (error) {
-    //     console.error((error as Error).message)
-    //     return null
-    // }
 }

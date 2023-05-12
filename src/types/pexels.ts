@@ -26,21 +26,21 @@ export type PexelsSource = {
 export type HexColor = `#${string}`
 
 export enum PexelsOrientation {
-    '' = '',
+    'all' = '',
     'landscape' = 'landscape',
     'portrait' = 'portrait',
     'square' = 'square',
 }
 
 export enum PexelsSize {
-    '' = '',
+    'all' = '',
     'large (24MP)' = 'large',
     'medium (12MP)' = 'medium',
     'small (4MP)' = 'small',
 }
 
 export enum PexelsColor {
-    '' = '',
+    'all' = '',
     'red' = 'red',
     'orange' = 'orange',
     'yellow' = 'yellow',
@@ -56,7 +56,7 @@ export enum PexelsColor {
 }
 
 export enum PexelsLocale {
-    '' = '',
+    'all' = '',
     'english' = 'en-US',
     'portuguese' = 'pt-BR',
     'spanish' = 'es-ES',

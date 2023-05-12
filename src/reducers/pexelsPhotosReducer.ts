@@ -1,10 +1,18 @@
 import { Reducer } from 'react'
-import { PexelsSearchParameters, PexelsSearchResponse } from '../types/pexels'
+import {
+    PexelsColor,
+    PexelsLocale,
+    PexelsOrientation,
+    PexelsSearchParameters,
+    PexelsSearchResponse,
+    PexelsSize,
+} from '../types/pexels'
 
-export const SET_PARAMETERS = 'SET_PARAMETERS'
-export const SEARCH = 'SEARCH'
+export const PARAMETERS = 'PARAMETERS'
+export const LOADING = 'LOADING'
 export const SUCCESS = 'SUCCESS'
 export const ERROR = 'ERROR'
+export const MORE = 'MORE'
 
 export type PhotosState = {
     loading: boolean
@@ -13,19 +21,17 @@ export type PhotosState = {
     PexelsSearchResponse
 
 // export type PhotosSetParametersPayload = Omit<PexelsSearchParameters, 'query'> & { query?: string }
-export type PhotosSetParametersPayload = PexelsSearchParameters
-export type PhotosSuccessPayload = PexelsSearchResponse
+export type ParametersPayload = PexelsSearchParameters
+export type SuccessPayload = PexelsSearchResponse
+export type MorePayload = PexelsSearchResponse
 
-export type PhotosSetParamatersAction = { type: typeof SET_PARAMETERS; payload: PhotosSetParametersPayload }
-export type PhotosSearchAction = { type: typeof SEARCH }
-export type PhotosSetSuccessAction = { type: typeof SUCCESS; payload: PhotosSuccessPayload }
-export type PhotosSetErrorAction = { type: typeof ERROR }
+export type ParamatersAction = { type: typeof PARAMETERS; payload: ParametersPayload }
+export type LoadingAction = { type: typeof LOADING }
+export type SuccessAction = { type: typeof SUCCESS; payload: SuccessPayload }
+export type ErrorAction = { type: typeof ERROR }
+export type MoreAction = { type: typeof MORE; payload: MorePayload }
 
-export type PhotosAction =
-    | PhotosSetParamatersAction
-    | PhotosSearchAction
-    | PhotosSetSuccessAction
-    | PhotosSetErrorAction
+export type PhotosAction = ParamatersAction | LoadingAction | SuccessAction | ErrorAction | MoreAction
 
 export type PhotosReducer = Reducer<PhotosState, PhotosAction>
 
@@ -37,22 +43,36 @@ export const INITIAL_STATE: PhotosState = {
     per_page: 80,
     photos: [],
     total_results: 0,
+    color: PexelsColor.all,
+    locale: PexelsLocale.all,
+    orientation: PexelsOrientation.all,
+    size: PexelsSize.all,
 }
 
-export const pexelsPhotosReducer: PhotosReducer = (state, action) => {
+export const pexelsPhotosReducer: PhotosReducer = (prevState, action) => {
+    // console.log('/// REDUCER')
+
+    let newState: PhotosState
+
     switch (action.type) {
-        case SET_PARAMETERS:
-            console.log(action)
-            const result = { ...state, ...action.payload }
-            return result
-        case SEARCH:
-            console.log(state)
-            return { ...state, loading: true }
+        case PARAMETERS:
+            newState = { ...prevState, ...action.payload }
+            return newState
+        case LOADING:
+            newState = { ...prevState, loading: true }
+            return newState
         case SUCCESS:
-            return { ...state, ...action.payload, error: false, loading: false }
+            newState = { ...prevState, ...action.payload, error: false, loading: false }
+            return newState
         case ERROR:
-            return { ...state, error: true, loading: false }
+            newState = { ...prevState, error: true, loading: false }
+            return newState
+        case MORE:
+            newState = { ...prevState, ...action.payload, error: false, loading: false }
+            console.log('useReducer MORE')
+            console.log(newState)
+            return newState
         default:
-            return state
+            return prevState
     }
 }
