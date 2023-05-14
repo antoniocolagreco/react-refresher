@@ -2,6 +2,12 @@
   fill: white;
 }
 
+.form {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
 .inputContainer {
   display: flex;
   flex-wrap: wrap;
@@ -14,14 +20,29 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 1rem
 }
 
 .optionContainer {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin: 1rem;
+  margin: 0 1rem;
+}
+
+.optionContainer :is(label) {
+  width: 5rem;
+  text-align: right;
+}
+
+.optionContainer :is(label)::after {
+  content: ":";
+}
+
+.optionContainer :is(select, input, textarea) {
+  width: 12.5rem;
 }
 
 .logo {
@@ -33,10 +54,13 @@
   height: 2rem;
 }
 
+.br {
+  display: block;
+  margin: 2rem 0;
+  background-color: var(--color-gray-3);
+  height: 1px;
+}
+
 .gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
-  grid-auto-flow: dense;
-  gap: 1rem;
+  margin: 1rem 0;
 }

@@ -68,9 +68,23 @@ export const pexelsPhotosReducer: PhotosReducer = (prevState, action) => {
             newState = { ...prevState, error: true, loading: false }
             return newState
         case MORE:
-            newState = { ...prevState, ...action.payload, error: false, loading: false }
+            const allPhotos = [...prevState.photos, ...action.payload.photos]
+            newState = {
+                query: prevState.query,
+                orientation: prevState.orientation,
+                size: prevState.size,
+                color: prevState.color,
+                locale: prevState.locale,
+                total_results: prevState.total_results,
+                per_page: prevState.per_page,
+                page: action.payload.page,
+                next_page: action.payload.next_page,
+                prev_page: action.payload.prev_page,
+                photos: allPhotos,
+                error: false,
+                loading: false,
+            }
             console.log('useReducer MORE')
-            console.log(newState)
             return newState
         default:
             return prevState

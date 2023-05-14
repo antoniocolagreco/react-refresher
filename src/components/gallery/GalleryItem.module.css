@@ -2,8 +2,9 @@
   display: block;
   overflow: hidden;
   border-radius: 1rem;
-  min-width: 200px;
-  height: 200px;
+  min-width: 12.5rem;
+  height: 12.5rem;
+  z-index: 1;
 }
 
 
@@ -58,25 +59,37 @@
   opacity: 1;
 }
 
-.spanTwoCol {
+.span1x2 {
   grid-column: span 2;
+  min-width: 26rem;
 }
 
-.spanTwoRow {
+.span2x1 {
   grid-row: span 2;
-  height: auto;
+  height: 26rem;
+}
+
+.span2x2 {
+  grid-area: span 2 / span 2;
+  min-width: 26rem;
+  height: 26rem;
 }
 
 
 @media screen and (max-width:500px) {
-  .spanTwoCol {
+  .span1x2 {
     grid-column: span 1;
+    min-width: 12.5rem;
   }
 
-  .spanTwoRow {
+  .span2x1 {
     grid-row: span 1;
-
   }
 
-
+  .span2x2 {
+    grid-column: span 1;
+    grid-row: span 1;
+    min-width: 12.5rem;
+    height: 12.5rem;
+  }
 }

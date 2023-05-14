@@ -1,15 +1,16 @@
 import classes from '@utils/classes'
-import { AnchorHTMLAttributes, FC, useState } from 'react'
+import { AnchorHTMLAttributes, FC, Ref, forwardRef, useState } from 'react'
 import { PexelsPhoto } from '../../types/pexels'
 import styles from './GalleryItem.module.css'
 
-type GalleryItemProps = {
+type GalleryItemProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
+    ref?: Ref<HTMLAnchorElement>
     photo: PexelsPhoto
     figureClass?: string
     imgClass?: string
 }
 
-const GalleryItem: FC<AnchorHTMLAttributes<HTMLAnchorElement> & GalleryItemProps> = (props) => {
+const GalleryItem: FC<GalleryItemProps> = forwardRef<HTMLAnchorElement, GalleryItemProps>((props, ref) => {
     const { children, style, photo, className, figureClass, imgClass, ...otherProps } = props
     const [visible, setVisible] = useState(false)
 
@@ -18,10 +19,12 @@ const GalleryItem: FC<AnchorHTMLAttributes<HTMLAnchorElement> & GalleryItemProps
     let src = `${photo.src.original}?auto=compress&cs=tinysrgb&dpr=1&w=500`
     let gridClass = ''
     if (proportions > 1.49) {
-        gridClass = styles.spanTwoCol
-    }
-    if (proportions < 0.7) {
-        gridClass = styles.spanTwoRow
+        gridClass = styles.span1x2
+    } else if (proportions < 0.7) {
+        gridClass = styles.span2x1
+    } else {
+        const random = Math.floor(Math.random() * 10)
+        if (random < 1) gridClass = styles.span2x2
     }
 
     return (
@@ -29,8 +32,9 @@ const GalleryItem: FC<AnchorHTMLAttributes<HTMLAnchorElement> & GalleryItemProps
             className={classes(styles.galleryItem, gridClass)}
             target="_blank"
             href={photo.url}
-            {...otherProps}
             style={{ backgroundColor: photo.avg_color, ...style }}
+            ref={ref}
+            {...otherProps}
         >
             <figure className={classes(styles.figure, figureClass, visible ? styles.visible : styles.hidden)}>
                 <img
@@ -44,6 +48,6 @@ const GalleryItem: FC<AnchorHTMLAttributes<HTMLAnchorElement> & GalleryItemProps
             </figure>
         </a>
     )
-}
+})
 
 export default GalleryItem
