@@ -7,7 +7,9 @@ import { FC } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import DefaultPageLayout from './components/layout/DefaultPageLayout'
 import MeetupsPageLayout from './components/layout/MeetupsPageLayout'
-import MoreHooksPageLayout from './components/layout/MoreHooksPageLayout'
+import PagelessLayout from './components/layout/PagelessLayout'
+import CanvasTestPage from './pages/CanvasTestPage'
+import ColorPalettesPage from './pages/ColorPalettesPage'
 import UseReducerPage from './pages/UseReducerPage'
 import UseTransitionPage from './pages/UseTransitionPage'
 
@@ -24,13 +26,14 @@ const App: FC<AppProps> = (props) => {
                 <Route element={<DefaultPageLayout />}>
                     <Route path={RoutePaths.FAVORITES} element={<FavouritesPage />} />
                     <Route path={RoutePaths.CARD_MODAL_TEST} element={<CardsModalTestPage />} />
-                </Route>
-                <Route path={RoutePaths.MORE_HOOKS} element={<MoreHooksPageLayout />}>
-                    <Route index element={<Navigate to={RoutePaths.USE_TRANSITION} replace />} />
                     <Route path={RoutePaths.USE_TRANSITION} element={<UseTransitionPage />} />
                     <Route path={RoutePaths.USE_REDUCER} element={<UseReducerPage />} />
+                    <Route path={RoutePaths.CANVAS_TEST} element={<CanvasTestPage />} />
+                    <Route path={RoutePaths.COLOR_PALETTES} element={<ColorPalettesPage />} />
                 </Route>
-                <Route path="*" element={<ErrorPage />} />
+                <Route element={<PagelessLayout />}>
+                    <Route path="*" element={<ErrorPage />} />
+                </Route>
             </Route>
         </Routes>
     )

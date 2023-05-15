@@ -1,8 +1,8 @@
 .select {
   border-radius: 100vw;
-  border: 1px solid var(--color-gray-3);
-  background-color: var(--color-gray-0);
-  color: var(--color-grape-9);
+  border: 1px solid var(--gray-3);
+  background-color: var(--gray-0);
+  color: var(--grape-9);
   font-weight: bold;
   padding: 0.5rem 1rem;
 }

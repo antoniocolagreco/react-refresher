@@ -23,7 +23,16 @@ const NavigationBar: FC<HTMLAttributes<HTMLElement & NavigationBarProps>> = (pro
                     <NavBarLink to={`/${RoutePaths.CARD_MODAL_TEST}`}>Test Card \ Modal</NavBarLink>
                 </li>
                 <li className={styles.navBarListItem}>
-                    <NavBarLink to={`/${RoutePaths.MORE_HOOKS}`}>More Hooks</NavBarLink>
+                    <NavBarLink to={`/${RoutePaths.USE_TRANSITION}`}>Words Generator</NavBarLink>
+                </li>
+                <li className={styles.navBarListItem}>
+                    <NavBarLink to={`/${RoutePaths.USE_REDUCER}`}>Pexels Gallery</NavBarLink>
+                </li>
+                <li className={styles.navBarListItem}>
+                    <NavBarLink to={`/${RoutePaths.CANVAS_TEST}`}>Canvas Test</NavBarLink>
+                </li>
+                <li className={styles.navBarListItem}>
+                    <NavBarLink to={`/${RoutePaths.COLOR_PALETTES}`}>Color Palettes</NavBarLink>
                 </li>
             </ul>
         </nav>

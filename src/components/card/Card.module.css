@@ -1,5 +1,5 @@
 .header {
-  background-color: var(--color-grape-9);
+  background-color: var(--grape-9);
   padding: 1rem;
   overflow: hidden;
   margin: -1rem -1rem 0 -1rem;
@@ -8,7 +8,7 @@
 .title {
   margin: 0;
   font-size: 1.5rem;
-  color: var(--color-grape-0);
+  color: var(--grape-0);
 }
 
 .card {

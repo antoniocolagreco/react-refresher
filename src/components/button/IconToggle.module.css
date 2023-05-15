@@ -11,19 +11,19 @@
 }
 
 .iconToggle.on {
-  fill: var(--color-grape-9);
+  fill: var(--grape-9);
 }
 
 .iconToggle.off {
-  fill: var(--color-gray-7);
+  fill: var(--gray-7);
 }
 
 .iconToggle:hover
 {
-  background-color: var(--color-grape-1);
-  fill: var(--color-grape-9);
+  background-color: var(--grape-1);
+  fill: var(--grape-9);
 }
 .iconToggle:active {
-  background-color: var(--color-grape-1);
-  fill: var(--color-grape-9);
+  background-color: var(--grape-1);
+  fill: var(--grape-9);
 }

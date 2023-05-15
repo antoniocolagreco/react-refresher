@@ -19,16 +19,16 @@
 
 .inputs input {
   border-radius: 7px;
-  border: 1px solid var(--color-gray-3);
-  background-color: var(--color-gray-0);
-  color: var(--color-grape-9);
+  border: 1px solid var(--gray-3);
+  background-color: var(--gray-0);
+  color: var(--grape-9);
   font-weight: bold;
   text-align: center;
 }
 
 
 .icon {
-  fill: var(--color-grape-0);
+  fill: var(--grape-0);
 }
 
 .names {
@@ -41,19 +41,19 @@
 
 .name {
   position: relative;
-  background-color: var(--color-violet-9);
+  background-color: var(--violet-9);
   font-weight: bold;
   padding: 0.5rem 1rem;
   border-radius: 100vw;
   transition: 0.3s ease-out;
-  border: 2px solid var(--color-violet-9);
+  border: 2px solid var(--violet-9);
   overflow: hidden;
 }
 
 .name:hover {
-  border-color: var(--color-grape-9);
+  border-color: var(--grape-9);
   transform: scale(1.2);
-  background-color: var(--color-violet-0);
+  background-color: var(--violet-0);
   cursor: pointer;
 }
 
@@ -63,21 +63,21 @@
 }
 
 .firstPart {
-  color: var(--color-grape-4);
+  color: var(--grape-4);
   transition: 0.1s ease-out;
 }
 
 .name:hover .firstPart {
-  color: var(--color-gray-7);
+  color: var(--gray-7);
 }
 
 .secondPart {
-  color: var(--color-grape-0);
+  color: var(--grape-0);
   transition: 0.1s ease-out;
 }
 
 .name:hover .secondPart {
-  color: var(--color-gray-7);
+  color: var(--gray-7);
 }
 
 .name .copied {
@@ -85,9 +85,9 @@
   visibility: hidden;
   opacity: 0;
   position: absolute;
-  background-color: var(--color-grape-0);
+  background-color: var(--grape-0);
   inset: 0;
-  color: var(--color-grape-9);
+  color: var(--grape-9);
   display: flex;
   flex-direction: column;
   justify-content: center;

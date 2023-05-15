@@ -26,10 +26,10 @@
 }
 
 .icon {
-  fill: var(--color-grape-0);
+  fill: var(--grape-0);
 }
 
 .questionBold {
   font-weight: 600;
-  color: var(--color-grape-9);
+  color: var(--grape-9);
 }

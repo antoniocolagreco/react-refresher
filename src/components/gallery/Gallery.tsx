@@ -1,6 +1,7 @@
 import classes from '@utils/classes'
 import { FC, HTMLAttributes, useEffect, useRef } from 'react'
 import { PexelsPhoto } from '../../types/pexels'
+import { cLog } from '../../utils/logger'
 import styles from './Gallery.module.css'
 import GalleryItem from './GalleryItem'
 
@@ -11,6 +12,8 @@ type GalleryProps = {
 
 const THRESHOLD = 80
 
+const DEBUG_MODE = false
+
 const Gallery: FC<HTMLAttributes<HTMLDivElement> & GalleryProps> = (props) => {
     const { photos, onEnd, children, className, ...otherProps } = props
     const endRef = useRef<HTMLAnchorElement>(null)
@@ -19,14 +22,13 @@ const Gallery: FC<HTMLAttributes<HTMLDivElement> & GalleryProps> = (props) => {
     useEffect(() => {
         const observerCallback: IntersectionObserverCallback = (entries, observer) => {
             if (!entries[0].isIntersecting) {
-                console.log('Observer:not intersecting')
+                cLog(DEBUG_MODE, 'Observer:not intersecting')
                 return
             }
-            console.log('onEnd')
             if (onEnd) onEnd()
         }
 
-        console.log('Observer: new instance')
+        cLog(DEBUG_MODE, 'Observer: new instance')
         observerRef.current = new IntersectionObserver(observerCallback)
 
         if (endRef.current) {
@@ -34,7 +36,7 @@ const Gallery: FC<HTMLAttributes<HTMLDivElement> & GalleryProps> = (props) => {
         }
 
         return () => {
-            console.log('Observer: disconnecting')
+            cLog(DEBUG_MODE, 'Observer: disconnecting')
             observerRef.current?.disconnect()
         }
     }, [onEnd])
@@ -45,10 +47,8 @@ const Gallery: FC<HTMLAttributes<HTMLDivElement> & GalleryProps> = (props) => {
                 const length = array.length
 
                 if (length < THRESHOLD || (length >= THRESHOLD && index === length - THRESHOLD)) {
-                    console.log(`elemento ${index} con endRef`)
                     return <GalleryItem key={index} photo={photo} ref={endRef} />
                 } else {
-                    console.log(`elemento ${index}`)
                     return <GalleryItem key={index} photo={photo} />
                 }
             })}

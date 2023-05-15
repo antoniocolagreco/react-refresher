@@ -16,7 +16,6 @@ const generateSearchUrl = (parameters: PexelsSearchParameters): string => {
 }
 
 export const searchPexelsPhotos = async (parameters: PexelsSearchParameters): Promise<PexelsSearchResponse> => {
-    console.log('searchPexelsPhotos')
     const headers = new Headers({ Authorization: PEXELS_API_KEY })
     const generatedURL = generateSearchUrl(parameters)
     const response = await fetch(generatedURL, {
@@ -27,7 +26,6 @@ export const searchPexelsPhotos = async (parameters: PexelsSearchParameters): Pr
 }
 
 export const morePexelsPhotos = async (next: string): Promise<PexelsSearchResponse> => {
-    console.log('morePexelsPhotos')
     const headers = new Headers({ Authorization: PEXELS_API_KEY })
     const response = await fetch(next, {
         headers: headers,

@@ -84,7 +84,6 @@ export const pexelsPhotosReducer: PhotosReducer = (prevState, action) => {
                 error: false,
                 loading: false,
             }
-            console.log('useReducer MORE')
             return newState
         default:
             return prevState

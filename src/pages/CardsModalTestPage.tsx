@@ -2,13 +2,14 @@ import Button from '@components/button/Button'
 import Card from '@components/card/Card'
 import { ModalContext } from '@context/ModalContext'
 import IconOK from '@icons/IconOK'
-import { FC, Fragment, useContext } from 'react'
+import { FC, HTMLAttributes, useContext } from 'react'
+import { Helmet } from 'react-helmet-async'
+import classes from '../utils/classes'
 import multiplyComponent from '../utils/mutiplyComponent'
 import styles from './CardsModalTestPage.module.css'
 
-type CardsModalTestPageProps = {}
-
-const CardsModalTestPage: FC<CardsModalTestPageProps> = (props) => {
+const CardsModalTestPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
+    const { children, className, ...otherProps } = props
     const { showModal, hideModal } = useContext(ModalContext)
 
     const card = (
@@ -28,7 +29,7 @@ const CardsModalTestPage: FC<CardsModalTestPageProps> = (props) => {
                                 nostrum repellat! Deserunt dolore consequuntur hic culpa maiores.
                             </p>
                             <Button onClick={() => hideModal()} className={styles.viewButton}>
-                                <IconOK style={{ width: '2rem', height: '2rem', fill: 'var(--color-grape-0)' }} />
+                                <IconOK style={{ width: '2rem', height: '2rem', fill: 'var(--grape-0)' }} />
                                 OK
                             </Button>
                         </>,
@@ -37,16 +38,19 @@ const CardsModalTestPage: FC<CardsModalTestPageProps> = (props) => {
                 }
                 className={styles.viewButton}
             >
-                <IconOK style={{ width: '2rem', height: '2rem', fill: 'var(--color-grape-0)' }} />
+                <IconOK style={{ width: '2rem', height: '2rem', fill: 'var(--grape-0)' }} />
                 View
             </Button>
         </Card>
     )
 
     return (
-        <Fragment {...props}>
+        <div className={classes(styles.canvasTestPage, className)} {...otherProps}>
+            <Helmet>
+                <title>Test Card \ Modal</title>
+            </Helmet>
             <div className={styles.cardsContainer}>{multiplyComponent(card, 10)}</div>
-        </Fragment>
+        </div>
     )
 }
 

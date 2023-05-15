@@ -6,18 +6,18 @@
   font-weight: 400;
   text-decoration: none;
   transition: all 0.2s;
-  color: var(--color-grape-0);
+  color: var(--grape-0);
   background-color: transparent;
   line-height: 1.75;
   cursor: pointer;
 }
 
 .navBarButton:hover {
-  color: var(--color-grape-9);
-  background-color: var(--color-grape-0);
+  color: var(--grape-9);
+  background-color: var(--grape-0);
 }
 
 .navBarButton:active {
-  color: var(--color-grape-0);
-  background-color: var(--color-grape-6);
+  color: var(--grape-0);
+  background-color: var(--grape-6);
 }

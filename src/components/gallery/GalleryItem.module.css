@@ -43,12 +43,12 @@
   font-family: "Arial";
   font-size: 0.75rem;
   padding: 3rem 1rem 1rem 1rem;
-  color: var(--color-gray-0);
+  color: var(--gray-0);
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to top, var(--color-gray-9), var(--color-transparent));
+  background: linear-gradient(to top, var(--gray-9), var(--transparent));
   text-shadow: 0 0 5px #000;
   z-index: 1;
 }

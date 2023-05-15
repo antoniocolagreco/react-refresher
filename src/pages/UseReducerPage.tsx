@@ -6,6 +6,7 @@ import Option from '../components/select/Option'
 import Select from '../components/select/Select'
 import { morePexelsPhotos, searchPexelsPhotos } from '../data/pexels'
 
+import { Helmet } from 'react-helmet-async'
 import IconSearch from '../icons/IconSearch'
 import {
     ERROR,
@@ -17,7 +18,10 @@ import {
     pexelsPhotosReducer,
 } from '../reducers/pexelsPhotosReducer'
 import { PexelsColor, PexelsLocale, PexelsOrientation, PexelsSize } from '../types/pexels'
+import { cLog } from '../utils/logger'
 import styles from './UseReducerPage.module.css'
+
+const DEBUG_MODE = true
 
 const UseReducerPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
     const { children, className, ...otherProps } = props
@@ -26,9 +30,9 @@ const UseReducerPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
     const formSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         dispatch({ type: LOADING })
-        searchPexelsPhotos(state)
+        searchPexelsPhotos({ ...state, page: 0 })
             .then((response) => {
-                console.log(response)
+                cLog(DEBUG_MODE, response)
                 dispatch({ type: SUCCESS, payload: response })
             })
             .catch((error) => {
@@ -76,7 +80,6 @@ const UseReducerPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 
     const loadMorePhotos = useCallback(() => {
         if (state.total_results === 0 || !state.next_page) return
-        console.log('Dispatch more')
         dispatch({ type: LOADING })
         morePexelsPhotos(state.next_page)
             .then((response) => {
@@ -92,6 +95,9 @@ const UseReducerPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 
     return (
         <div className={className} {...otherProps}>
+            <Helmet>
+                <title>Pexels Gallery</title>
+            </Helmet>
             <form className={styles.form} onSubmit={formSubmitHandler}>
                 <span className={styles.inputContainer}>
                     <a href="https://www.pexels.com" target="_blank" className={styles.logo}>

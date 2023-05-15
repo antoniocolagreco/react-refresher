@@ -1,5 +1,6 @@
 import classes from '@utils/classes'
 import React, { FC, HTMLAttributes, useEffect, useState, useTransition } from 'react'
+import { Helmet } from 'react-helmet-async'
 import Button from '../components/button/Button'
 import IconOK from '../icons/IconOK'
 import styles from './UseTransitionPage.module.css'
@@ -62,11 +63,9 @@ const UseTransitionPage: FC<HTMLAttributes<HTMLDivElement> & UseTransitionPagePr
 
         worker.onmessage = (e) => {
             const names = e.data as Array<string>
-            setTimeout(() => {
-                startTransition(() => {
-                    setNames(names)
-                })
-            }, 1)
+            startTransition(() => {
+                setNames(names)
+            })
         }
 
         const data = {
@@ -81,6 +80,9 @@ const UseTransitionPage: FC<HTMLAttributes<HTMLDivElement> & UseTransitionPagePr
 
     return (
         <div className={classes(styles.useTransitionPage, className)} {...otherProps}>
+            <Helmet>
+                <title>Words Generator</title>
+            </Helmet>
             <form onSubmit={(e) => formSubmitHandler(e)} className={styles.form}>
                 <span className={styles.inputs}>
                     <span>Genera</span>
@@ -119,7 +121,6 @@ const UseTransitionPage: FC<HTMLAttributes<HTMLDivElement> & UseTransitionPagePr
                 </Button>
             </form>
             <div className={styles.names}>
-                {/* {isPending && <div>Generating...</div>} */}
                 {names.map((n, index) => {
                     return (
                         <button className={styles.name} key={index} onClick={() => navigator.clipboard.writeText(n)}>

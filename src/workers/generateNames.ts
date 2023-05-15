@@ -1,6 +1,6 @@
-/// DICHIARAZIONE CLASSE LETTER
+/// DICHIARAZIONE CLASSE CHARACTER
 
-class Letter {
+class Character {
     private value: string
     private vocal: boolean
     private consonant: boolean
@@ -8,7 +8,7 @@ class Letter {
     private endWord: boolean
     private startSyllable: boolean
     private startWord: boolean
-    private nextCompatibleLetters: Array<Letter>
+    private nextCompatibleCharacters: Array<Character>
 
     constructor(
         value: string,
@@ -18,7 +18,7 @@ class Letter {
         endWord: boolean,
         startSyllable: boolean,
         startWord: boolean,
-        nextCompatibleLetters: Array<Letter>
+        nextCompatibleCharacters: Array<Character>
     ) {
         this.value = value
         this.vocal = vocal
@@ -28,7 +28,7 @@ class Letter {
         this.endWord = endWord
         this.startSyllable = startSyllable
         this.startWord = startWord
-        this.nextCompatibleLetters = nextCompatibleLetters
+        this.nextCompatibleCharacters = nextCompatibleCharacters
     }
 
     public toString() {
@@ -58,131 +58,131 @@ class Letter {
         return this.startWord
     }
 
-    public getNextCompatibleLetters(): Array<Letter> {
-        return this.nextCompatibleLetters
+    public getNextCompatibleCharacters(): Array<Character> {
+        return this.nextCompatibleCharacters
     }
 
-    public setNextCompatibleLetters(nextCompatibleLetters: Array<Letter>): void {
-        this.nextCompatibleLetters = nextCompatibleLetters
+    public setNextCompatibleCharacters(nextCompatibleCharacters: Array<Character>): void {
+        this.nextCompatibleCharacters = nextCompatibleCharacters
     }
 }
 
-/// CREAZIONE LETTERS
+/// CREAZIONE CHARACTERS
 
-const a = new Letter('a', true, false, true, true, true, true, [])
-const e = new Letter('e', true, false, true, true, true, true, [])
-const i = new Letter('i', true, false, true, true, true, true, [])
-const o = new Letter('o', true, false, true, true, true, true, [])
-const u = new Letter('u', true, false, true, false, true, true, [])
+const a = new Character('a', true, false, true, true, true, true, [])
+const e = new Character('e', true, false, true, true, true, true, [])
+const i = new Character('i', true, false, true, true, true, true, [])
+const o = new Character('o', true, false, true, true, true, true, [])
+const u = new Character('u', true, false, true, false, true, true, [])
 
-const b = new Letter('b', false, true, false, false, true, true, [])
-const d = new Letter('d', false, true, false, false, true, true, [])
-const f = new Letter('f', false, true, false, false, true, true, [])
-const p = new Letter('p', false, true, false, false, true, true, [])
+const b = new Character('b', false, true, false, false, true, true, [])
+const d = new Character('d', false, true, false, false, true, true, [])
+const f = new Character('f', false, true, false, false, true, true, [])
+const p = new Character('p', false, true, false, false, true, true, [])
 
-const t = new Letter('t', false, true, false, false, true, true, [])
-const v = new Letter('v', false, true, false, false, true, true, [])
-const z = new Letter('z', false, true, false, false, true, true, [])
+const t = new Character('t', false, true, false, false, true, true, [])
+const v = new Character('v', false, true, false, false, true, true, [])
+const z = new Character('z', false, true, false, false, true, true, [])
 
-const c = new Letter('c', false, true, false, false, true, true, [])
-const g = new Letter('g', false, true, false, false, true, true, [])
+const c = new Character('c', false, true, false, false, true, true, [])
+const g = new Character('g', false, true, false, false, true, true, [])
 
-const l = new Letter('l', false, true, true, false, true, true, [])
-const r = new Letter('r', false, true, true, false, true, true, [])
-const n = new Letter('n', false, true, true, false, true, true, [])
-const m = new Letter('m', false, true, true, false, true, true, [])
+const l = new Character('l', false, true, true, false, true, true, [])
+const r = new Character('r', false, true, true, false, true, true, [])
+const n = new Character('n', false, true, true, false, true, true, [])
+const m = new Character('m', false, true, true, false, true, true, [])
 
-const q = new Letter('q', false, true, false, false, true, true, [])
+const q = new Character('q', false, true, false, false, true, true, [])
 
-const s = new Letter('s', false, true, false, false, true, true, [])
+const s = new Character('s', false, true, false, false, true, true, [])
 
-const h = new Letter('h', false, true, false, false, false, false, [])
+const h = new Character('h', false, true, false, false, false, false, [])
 
 const alphabet = [a, b, c, d, e, f, g, h, i, l, m, n, o, p, q, r, s, t, u, v, z]
 
-/// CONFIGURAZIONE LETTERS
+/// CONFIGURAZIONE CHARACTERS
 
-a.setNextCompatibleLetters([e, i, u, b, c, d, f, g, l, m, n, p, q, r, s, t, v, z])
-e.setNextCompatibleLetters([a, i, o, u, b, c, d, f, g, l, m, n, p, q, r, s, t, v, z])
-i.setNextCompatibleLetters([a, e, o, u, b, c, d, f, g, l, m, n, p, q, r, s, t, v, z])
-o.setNextCompatibleLetters([a, e, i, b, c, d, f, g, l, m, n, p, q, r, s, t, v, z])
-u.setNextCompatibleLetters([a, e, i, o, b, c, d, f, g, l, m, n, p, q, r, s, t, v, z])
+a.setNextCompatibleCharacters([e, i, u, b, c, d, f, g, l, m, n, p, q, r, s, t, v, z])
+e.setNextCompatibleCharacters([a, i, o, u, b, c, d, f, g, l, m, n, p, q, r, s, t, v, z])
+i.setNextCompatibleCharacters([a, e, o, u, b, c, d, f, g, l, m, n, p, q, r, s, t, v, z])
+o.setNextCompatibleCharacters([a, e, i, b, c, d, f, g, l, m, n, p, q, r, s, t, v, z])
+u.setNextCompatibleCharacters([a, e, i, o, b, c, d, f, g, l, m, n, p, q, r, s, t, v, z])
 
-b.setNextCompatibleLetters([a, b, e, i, l, o, r, u])
-c.setNextCompatibleLetters([a, c, e, h, i, l, o, q, r, u])
-d.setNextCompatibleLetters([a, d, e, i, l, o, r, u])
-f.setNextCompatibleLetters([a, f, e, i, l, o, r, u])
-g.setNextCompatibleLetters([a, g, e, h, i, l, o, r, u])
-h.setNextCompatibleLetters([e, i])
-l.setNextCompatibleLetters([a, b, c, d, e, f, g, i, l, m, n, o, p, q, s, t, u, v, z])
-m.setNextCompatibleLetters([a, b, e, i, m, o, p, u])
-n.setNextCompatibleLetters([a, c, d, e, f, g, i, n, o, q, s, t, u, v, z])
-p.setNextCompatibleLetters([a, e, i, l, o, p, r, u])
-q.setNextCompatibleLetters([u])
-r.setNextCompatibleLetters([a, b, c, d, e, f, g, i, l, m, n, o, p, q, r, s, t, u, v, z])
-s.setNextCompatibleLetters([a, b, c, d, e, f, g, i, l, m, n, o, p, q, r, s, t, u, v])
-t.setNextCompatibleLetters([a, e, i, l, o, r, t, u])
-v.setNextCompatibleLetters([a, e, i, l, o, r, u, v])
-z.setNextCompatibleLetters([a, e, i, o, u, z])
+b.setNextCompatibleCharacters([a, b, e, i, l, o, r, u])
+c.setNextCompatibleCharacters([a, c, e, h, i, l, o, q, r, u])
+d.setNextCompatibleCharacters([a, d, e, i, l, o, r, u])
+f.setNextCompatibleCharacters([a, f, e, i, l, o, r, u])
+g.setNextCompatibleCharacters([a, g, e, h, i, l, o, r, u])
+h.setNextCompatibleCharacters([e, i])
+l.setNextCompatibleCharacters([a, b, c, d, e, f, g, i, l, m, n, o, p, q, s, t, u, v, z])
+m.setNextCompatibleCharacters([a, b, e, i, m, o, p, u])
+n.setNextCompatibleCharacters([a, c, d, e, f, g, i, n, o, q, s, t, u, v, z])
+p.setNextCompatibleCharacters([a, e, i, l, o, p, r, u])
+q.setNextCompatibleCharacters([u])
+r.setNextCompatibleCharacters([a, b, c, d, e, f, g, i, l, m, n, o, p, q, r, s, t, u, v, z])
+s.setNextCompatibleCharacters([a, b, c, d, e, f, g, i, l, m, n, o, p, q, r, s, t, u, v])
+t.setNextCompatibleCharacters([a, e, i, l, o, r, t, u])
+v.setNextCompatibleCharacters([a, e, i, l, o, r, u, v])
+z.setNextCompatibleCharacters([a, e, i, o, u, z])
 
 const DEBUG_MODE = false
 
 const generateName = (startingName: string = '', maxLength: number = 10, minLegth: number = 3): string => {
-    cClear()
+    cClear(DEBUG_MODE)
 
     let name = startingName
     const numberOfCharacters = getRandomNumber(
         maxLength,
         startingName.length > minLegth ? startingName.length : minLegth
     )
-    cLog(`Numero di caratteri scelto: ${numberOfCharacters}`)
+    cLog(DEBUG_MODE, `Numero di caratteri scelto: ${numberOfCharacters}`)
 
     let theNameHasTheRightNumberOfCharacters = name.length >= numberOfCharacters
-    let lastLetter = getLetterFromString(name)
-    let theLastLetterCanEndTheName = lastLetter?.canEndWord()
+    let lastCharacter = getCharacterFromString(name)
+    let theLastCharacterCanEndTheName = lastCharacter?.canEndWord()
 
-    while (!theNameHasTheRightNumberOfCharacters || !theLastLetterCanEndTheName) {
-        cLog(`||||||||||||||||| Il nome corrente è: ${name} |||||||||||||||||`)
-        name = addLetter(name)
+    while (!theNameHasTheRightNumberOfCharacters || !theLastCharacterCanEndTheName) {
+        cLog(DEBUG_MODE, `||||||||||||||||| Il nome corrente è: ${name} |||||||||||||||||`)
+        name = addCharacter(name)
 
         if (name.length >= numberOfCharacters) {
             theNameHasTheRightNumberOfCharacters = true
         }
 
-        lastLetter = getLetterFromString(name)
+        lastCharacter = getCharacterFromString(name)
 
-        if (lastLetter && lastLetter.canEndWord()) {
-            theLastLetterCanEndTheName = true
+        if (lastCharacter && lastCharacter.canEndWord()) {
+            theLastCharacterCanEndTheName = true
         } else {
-            theLastLetterCanEndTheName = false
+            theLastCharacterCanEndTheName = false
         }
     }
 
-    cLog(`Il nome finale è: ${name}`)
+    cLog(DEBUG_MODE, `Il nome finale è: ${name}`)
     return name
 }
 
-const addLetter = (currentName?: string) => {
+const addCharacter = (currentName?: string) => {
     const name = currentName || ''
-    const lastLetter = getLetterFromString(name)
-    cLog(`L'ultima lettera di name è : ${lastLetter ? lastLetter.toString() : lastLetter}`)
-    let pickedLetter
+    const lastCharacter = getCharacterFromString(name)
+    cLog(DEBUG_MODE, `L'ultima lettera di name è : ${lastCharacter ? lastCharacter.toString() : lastCharacter}`)
+    let pickedCharacter
 
     //Se il nome è vuoto, prendo la prima lettera dall'alfabeto
-    if (!lastLetter) {
-        cLog(`Il nome è vuoto, scelgo una lettera dall'alfabeto`)
-        while (!pickedLetter || (pickedLetter && !pickedLetter.canStartWord())) {
-            pickedLetter = getRandomLetterFromSelection(alphabet)
-            cLog(`Verifico la lettera: ${pickedLetter.toString()}`)
+    if (!lastCharacter) {
+        cLog(DEBUG_MODE, `Il nome è vuoto, scelgo una lettera dall'alfabeto`)
+        while (!pickedCharacter || (pickedCharacter && !pickedCharacter.canStartWord())) {
+            pickedCharacter = getRandomCharacterFromSelection(alphabet)
+            cLog(DEBUG_MODE, `Verifico la lettera: ${pickedCharacter.toString()}`)
         }
-        cLog(`Scelta la lettera: ${pickedLetter.toString()}`)
+        cLog(DEBUG_MODE, `Scelta la lettera: ${pickedCharacter.toString()}`)
     }
     //altrimenti trovo una lettera compatibile con i caratteri precedenti
     else {
-        let secondToLastLetter
+        let secondToLastCharacter
         let compatible = false
 
-        cLog(`Cerco una lettera compatibile con ${name}`)
+        cLog(DEBUG_MODE, `Cerco una lettera compatibile con ${name}`)
 
         let limit = 0
 
@@ -198,102 +198,116 @@ const addLetter = (currentName?: string) => {
             const randomNumber = getRandomNumber(2)
             if (
                 name.length > 2 &&
-                lastLetter.isConsonant() &&
+                lastCharacter.isConsonant() &&
                 randomNumber === 0 &&
-                lastLetter !== h &&
-                lastLetter !== q
+                lastCharacter !== h &&
+                lastCharacter !== q
             ) {
-                pickedLetter = lastLetter
-                cLog(`------------------Raddoppio lettere ${lastLetter}${pickedLetter}`)
+                pickedCharacter = lastCharacter
+                cLog(DEBUG_MODE, `------------------Raddoppio lettere ${lastCharacter}${pickedCharacter}`)
             } else {
                 //Pesca una lettera
-                pickedLetter = getRandomLetterFromSelection(lastLetter.getNextCompatibleLetters())
+                pickedCharacter = getRandomCharacterFromSelection(lastCharacter.getNextCompatibleCharacters())
             }
 
             //Effettuo verifiche compatibilità
-            cLog(`Verifico la lettera: ${pickedLetter.toString()}`)
+            cLog(DEBUG_MODE, `Verifico la lettera: ${pickedCharacter.toString()}`)
 
             //Evita doppie consonanti ad inizio parola a meno che la prima si una s. "rd" no, "sd" si
             if (
-                (name.length === 1 && lastLetter.isConsonant() && lastLetter !== s && pickedLetter.isConsonant()) ||
-                (lastLetter === s && pickedLetter === s)
+                (name.length === 1 &&
+                    lastCharacter.isConsonant() &&
+                    lastCharacter !== s &&
+                    pickedCharacter.isConsonant()) ||
+                (lastCharacter === s && pickedCharacter === s)
             ) {
                 cLog(
-                    `All'inizio della parola non è possibile avere due consonanti delle quali la prima non è s oppure due s consecutive ${lastLetter}${pickedLetter}`
+                    DEBUG_MODE,
+                    `All'inizio della parola non è possibile avere due consonanti delle quali la prima non è s oppure due s consecutive ${lastCharacter}${pickedCharacter}`
                 )
                 compatible = false
             }
             //Verifica che dopo qu venga aggiunta una vocale
-            if (lastLetter === q && pickedLetter === u) {
-                cLog(`Trovata la sequenza 'qu', aggiungo una vocale e break`)
-                pickedLetter = getRandomLetterFromSelection([a, e, i, o])
-                return name + u.toString() + pickedLetter.toString()
+            if (lastCharacter === q && pickedCharacter === u) {
+                cLog(DEBUG_MODE, `Trovata la sequenza 'qu', aggiungo una vocale e break`)
+                pickedCharacter = getRandomCharacterFromSelection([a, e, i, o])
+                return name + u.toString() + pickedCharacter.toString()
             }
 
-            secondToLastLetter = getLetterFromString(name, 2)
-            if (secondToLastLetter) {
+            secondToLastCharacter = getCharacterFromString(name, 2)
+            if (secondToLastCharacter) {
                 //Verifica che non ci siano già due lettere uguali prima. "ss" ok, "sss" no
-                if (secondToLastLetter === pickedLetter && lastLetter === pickedLetter) {
+                if (secondToLastCharacter === pickedCharacter && lastCharacter === pickedCharacter) {
                     cLog(
-                        `${pickedLetter.toString()} non è valido quando già precedeuto da ${secondToLastLetter.toString()}${lastLetter.toString()}, aggiungo vocale e break`
+                        DEBUG_MODE,
+                        `${pickedCharacter.toString()} non è valido quando già precedeuto da ${secondToLastCharacter.toString()}${lastCharacter.toString()}, aggiungo vocale e break`
                     )
-                    pickedLetter = getRandomLetterFromSelection([a, e, i, o, u])
-                    return name + pickedLetter.toString()
+                    pickedCharacter = getRandomCharacterFromSelection([a, e, i, o, u])
+                    return name + pickedCharacter.toString()
                 }
 
                 //Verifica che non ci siano 3 consonanti consecutive, a meno che la prima sia una s e la terza, l o r. "plo"
                 if (
-                    secondToLastLetter.isConsonant() &&
-                    secondToLastLetter !== s &&
-                    lastLetter.isConsonant() &&
-                    pickedLetter.isConsonant() &&
-                    (pickedLetter != r || pickedLetter != l)
+                    secondToLastCharacter.isConsonant() &&
+                    secondToLastCharacter !== s &&
+                    lastCharacter.isConsonant() &&
+                    pickedCharacter.isConsonant() &&
+                    (pickedCharacter != r || pickedCharacter != l)
                 ) {
                     cLog(
-                        `Non è possibile avere 3 consonanti consecutive di questo tipo ${secondToLastLetter.toString()}${lastLetter.toString()}${pickedLetter.toString()}`
+                        DEBUG_MODE,
+                        `Non è possibile avere 3 consonanti consecutive di questo tipo ${secondToLastCharacter.toString()}${lastCharacter.toString()}${pickedCharacter.toString()}`
                     )
                     compatible = false
                 }
                 //Verifica che non ci siano 2 consonanti uguali consecutive, dopo una prima "s"
-                if (secondToLastLetter === s && (lastLetter === s || lastLetter === r) && pickedLetter === lastLetter) {
+                if (
+                    secondToLastCharacter === s &&
+                    (lastCharacter === s || lastCharacter === r) &&
+                    pickedCharacter === lastCharacter
+                ) {
                     cLog(
-                        `Non è possibile avere 2 r o l dopo 1 s ${secondToLastLetter.toString()}${lastLetter.toString()}${pickedLetter.toString()}`
+                        DEBUG_MODE,
+                        `Non è possibile avere 2 r o l dopo 1 s ${secondToLastCharacter.toString()}${lastCharacter.toString()}${pickedCharacter.toString()}`
                     )
                     compatible = false
                 }
                 //Se la sillaba inizia per s, la seconda lettera è una cosonante, la terza è una cosonante ma diversa da l o r. "snqui"
                 if (
-                    secondToLastLetter == s &&
-                    lastLetter.isConsonant() &&
-                    pickedLetter.isConsonant() &&
-                    pickedLetter !== l &&
-                    pickedLetter !== r
+                    secondToLastCharacter == s &&
+                    lastCharacter.isConsonant() &&
+                    pickedCharacter.isConsonant() &&
+                    pickedCharacter !== l &&
+                    pickedCharacter !== r
                 ) {
                     cLog(
-                        `Non è possibile avere 2 consonanti consecutive di questo tipo dopo la s: ${secondToLastLetter.toString()}${lastLetter.toString()}${pickedLetter.toString()}`
+                        DEBUG_MODE,
+                        `Non è possibile avere 2 consonanti consecutive di questo tipo dopo la s: ${secondToLastCharacter.toString()}${lastCharacter.toString()}${pickedCharacter.toString()}`
                     )
                     compatible = false
                 }
                 //Verifica che la penultima consonante non sia uguale a quella pescata "srs"
                 if (
-                    secondToLastLetter.isConsonant() &&
-                    pickedLetter.isConsonant() &&
-                    pickedLetter === secondToLastLetter
+                    secondToLastCharacter.isConsonant() &&
+                    pickedCharacter.isConsonant() &&
+                    pickedCharacter === secondToLastCharacter
                 ) {
                     cLog(
-                        `Non è possibile avere la penultima consonante uguale alla prima ${secondToLastLetter}${lastLetter}${pickedLetter}`
+                        DEBUG_MODE,
+                        `Non è possibile avere la penultima consonante uguale alla prima ${secondToLastCharacter}${lastCharacter}${pickedCharacter}`
                     )
                     compatible = false
                 }
                 //Non è possibile avere tre vocali consecutive a meno che la seconda non sia una i. "uio" si, "uao" no
                 if (
-                    secondToLastLetter.isVocal() &&
-                    pickedLetter.isVocal() &&
-                    lastLetter.isVocal() &&
-                    lastLetter !== i
+                    secondToLastCharacter.isVocal() &&
+                    pickedCharacter.isVocal() &&
+                    lastCharacter.isVocal() &&
+                    lastCharacter !== i
                 ) {
                     cLog(
-                        `Non è possibile avere tre vocali consecutive a meno che la seconda non sia una i: ${secondToLastLetter}${lastLetter}${pickedLetter}`
+                        DEBUG_MODE,
+                        `Non è possibile avere tre vocali consecutive a meno che la seconda non sia una i: ${secondToLastCharacter}${lastCharacter}${pickedCharacter}`
                     )
                     compatible = false
                 }
@@ -301,44 +315,32 @@ const addLetter = (currentName?: string) => {
         }
     }
 
-    if (!pickedLetter) return name
-    return name + pickedLetter.toString()
+    if (!pickedCharacter) return name
+    return name + pickedCharacter.toString()
 }
 
 const getRandomNumber = (maxValue: number, minValue: number = 0) => {
     return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue
 }
 
-const getRandomLetterFromSelection = (selection: Array<Letter>): Letter => {
+const getRandomCharacterFromSelection = (selection: Array<Character>): Character => {
     const randomIndex = getRandomNumber(selection.length - 1, 0)
-    cLog(`Selection è lungo ${selection.length}, l'indice random è ${randomIndex}`)
-    const randomLetter = selection[randomIndex]
-    cLog(`L'elemento numero ${randomIndex} di ${selection} è ${randomLetter.toString()}`)
-    return randomLetter
+    cLog(DEBUG_MODE, `Selection è lungo ${selection.length}, l'indice random è ${randomIndex}`)
+    const randomCharacter = selection[randomIndex]
+    cLog(DEBUG_MODE, `L'elemento numero ${randomIndex} di ${selection} è ${randomCharacter.toString()}`)
+    return randomCharacter
 }
 
-const convertStringToLetter = (string: string, letters: Array<Letter> = alphabet): Letter | null => {
-    for (let l of letters) {
+const convertStringToCharacter = (string: string, characters: Array<Character> = alphabet): Character | null => {
+    for (let l of characters) {
         if (string === l.toString()) return l
     }
     return null
 }
 
-const getLetterFromString = (string: string, fromEnd: number = 1): Letter | null => {
-    const letter = convertStringToLetter(string[string.length - fromEnd], alphabet)
-    return letter
-}
-
-const cLog = (string: string) => {
-    if (DEBUG_MODE) {
-        console.log(string)
-    }
-}
-
-const cClear = () => {
-    if (DEBUG_MODE) {
-        console.clear()
-    }
+const getCharacterFromString = (string: string, fromEnd: number = 1): Character | null => {
+    const character = convertStringToCharacter(string[string.length - fromEnd], alphabet)
+    return character
 }
 
 onmessage = (e) => {
@@ -357,4 +359,16 @@ type GenerateNamesWorkerData = {
     startingName: string
     minNumberOfCharacters: number
     maxNumberOfCharacters: number
+}
+
+const cLog = (debug: boolean, value: any) => {
+    if (debug) {
+        console.log(value)
+    }
+}
+
+const cClear = (debug: boolean) => {
+    if (debug) {
+        console.clear()
+    }
 }

@@ -22,9 +22,8 @@ const GalleryItem: FC<GalleryItemProps> = forwardRef<HTMLAnchorElement, GalleryI
         gridClass = styles.span1x2
     } else if (proportions < 0.7) {
         gridClass = styles.span2x1
-    } else {
-        const random = Math.floor(Math.random() * 10)
-        if (random < 1) gridClass = styles.span2x2
+    } else if (proportions > 0.94 && proportions < 1.06) {
+        gridClass = styles.span2x2
     }
 
     return (
