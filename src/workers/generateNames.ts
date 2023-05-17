@@ -213,7 +213,7 @@ const addCharacter = (currentName?: string) => {
             //Effettuo verifiche compatibilità
             cLog(DEBUG_MODE, `Verifico la lettera: ${pickedCharacter.toString()}`)
 
-            //Evita doppie consonanti ad inizio parola a meno che la prima si una s. "rd" no, "sd" si
+            //Evita doppie consonanti ad inizio parola a meno che la prima sia una s. "rd" no, "sd" si
             if (
                 (name.length === 1 &&
                     lastCharacter.isConsonant() &&
@@ -246,7 +246,7 @@ const addCharacter = (currentName?: string) => {
                     return name + pickedCharacter.toString()
                 }
 
-                //Verifica che non ci siano 3 consonanti consecutive, a meno che la prima sia una s e la terza, l o r. "plo"
+                //Verifica che non ci siano 3 consonanti consecutive, a meno che la prima sia una s e la terza, l o r. "spremere" si "spdemere" no
                 if (
                     secondToLastCharacter.isConsonant() &&
                     secondToLastCharacter !== s &&
@@ -260,7 +260,7 @@ const addCharacter = (currentName?: string) => {
                     )
                     compatible = false
                 }
-                //Verifica che non ci siano 2 consonanti uguali consecutive, dopo una prima "s"
+                //Verifica che non ci siano 2 consonanti uguali consecutive, dopo una prima "s", "sggatto" no
                 if (
                     secondToLastCharacter === s &&
                     (lastCharacter === s || lastCharacter === r) &&
@@ -286,7 +286,7 @@ const addCharacter = (currentName?: string) => {
                     )
                     compatible = false
                 }
-                //Verifica che la penultima consonante non sia uguale a quella pescata "srs"
+                //Verifica che la prima consonante non sia uguale a quella pescata, "srs".
                 if (
                     secondToLastCharacter.isConsonant() &&
                     pickedCharacter.isConsonant() &&

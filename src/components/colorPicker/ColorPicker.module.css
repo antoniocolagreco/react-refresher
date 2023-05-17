@@ -1,0 +1,100 @@
+.colorPicker {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto;
+  grid-auto-flow: row dense;
+  row-gap: 0.5rem;
+  column-gap: 1rem
+}
+
+.colorPicker label {
+  justify-self: right;
+}
+
+.canvasLabel {
+  grid-column-start: 1;
+}
+
+.canvasContainer {
+  grid-column-start: 2;
+  border-radius: 0.5rem;
+  border: 1px solid var(--gray-3);
+  overflow: hidden;
+  height: 2rem;
+  display: flex;
+}
+
+.canvasContainer>canvas {
+  cursor: crosshair;
+  width: 100%;
+}
+
+.otherLabel {
+  grid-column-start: 3;
+}
+
+.other,
+.inputColor {
+  grid-column-start: 4;
+}
+
+.inputColor {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--gray-3);
+  height: 2rem;
+  min-width: 100px;
+}
+
+.currentColor {
+  grid-column-start: 5;
+  grid-row: span 3;
+  border-radius: 0.5rem;
+  border: 1px solid var(--gray-3);
+  width: 7.5rem;
+  height: 7.5rem;
+}
+
+@media screen and (max-width: 799px) {
+  .colorPicker {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .canvasContainer {
+    grid-column-start: 2;
+    grid-column-end: 4;
+  }
+
+  .otherLabel {
+    grid-column-start: 1;
+  }
+
+  .other,
+  .inputColor {
+    grid-column-start: 2;
+  }
+
+  .currentColor {
+    grid-column-start: 3;
+    grid-row-start: 4;
+    grid-row-end: 7;
+  }
+}
+
+@media screen and (max-width: 499px) {
+  .colorPicker {
+    grid-template-columns: auto 1fr;
+  }
+
+  .canvasContainer {
+    grid-column-end: 3;
+  }
+
+  .currentColor {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 7;
+    width: auto;
+    height: 2rem;
+
+  }
+}
