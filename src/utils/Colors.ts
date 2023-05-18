@@ -9,15 +9,15 @@ export const RGBAToColor = (input: string): Color => {
 
     switch (value.length) {
         case 3:
-            red = parseInt(value[0], 16)
-            green = parseInt(value[1], 16)
-            blue = parseInt(value[2], 16)
+            red = (parseInt(value[0], 16) + 1) * 16 - 1
+            green = (parseInt(value[1], 16) + 1) * 16 - 1
+            blue = (parseInt(value[2], 16) + 1) * 16 - 1
             break
         case 4:
-            red = parseInt(value[0], 16)
-            green = parseInt(value[1], 16)
-            blue = parseInt(value[2], 16)
-            alpha = parseInt(value[3], 16)
+            red = (parseInt(value[0], 16) + 1) * 16 - 1
+            green = (parseInt(value[1], 16) + 1) * 16 - 1
+            blue = (parseInt(value[2], 16) + 1) * 16 - 1
+            alpha = (parseInt(value[3], 16) + 1) * 16 - 1
             break
         case 6:
             red = parseInt(value.substring(0, 2), 16)

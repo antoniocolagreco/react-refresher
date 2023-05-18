@@ -196,13 +196,13 @@ const ColorPicker: FC<HTMLAttributes<HTMLDivElement> & ColorPickerProps> = (prop
 
     const getHueCanvas = (): HTMLCanvasElement => {
         const hueCanvas = hueCanvasRef.current
-        if (!hueCanvas) throw new Error('Color canvas is null')
+        if (!hueCanvas) throw new Error('Hue canvas is null')
         return hueCanvas
     }
     const getHueContext = (): CanvasRenderingContext2D => {
         const hueCanvas = getHueCanvas()
         const hueContext = hueCanvas.getContext('2d')
-        if (!hueContext) throw new Error('Color context is null')
+        if (!hueContext) throw new Error('Hue context is null')
         return hueContext
     }
 
@@ -249,14 +249,13 @@ const ColorPicker: FC<HTMLAttributes<HTMLDivElement> & ColorPickerProps> = (prop
     }
 
     const handleColorInputKeyUp = (ev: KeyboardEvent<HTMLInputElement>) => {
-        const newHexColorInput = ev.currentTarget.value
+        const inputValue = ev.currentTarget.value
         if (ev.key !== 'Enter') return
-        if (!newHexColorInput.match(HEX_COLOR_REGEX)) {
+        if (!inputValue.match(HEX_COLOR_REGEX)) {
             setHexColorInput(ColorToRGBA(color))
             return
         }
-        const newColor = RGBAToColor(newHexColorInput)
-        console.log(newColor)
+        const newColor = RGBAToColor(inputValue)
         setColor(newColor)
     }
 
@@ -282,7 +281,7 @@ const ColorPicker: FC<HTMLAttributes<HTMLDivElement> & ColorPickerProps> = (prop
                 max="100"
                 step="1"
                 value={size}
-                className={styles.other}
+                className={styles.range}
                 onChange={handleSizeChange}
             />
             <label className={styles.otherLabel}>Alpha</label>
@@ -292,7 +291,7 @@ const ColorPicker: FC<HTMLAttributes<HTMLDivElement> & ColorPickerProps> = (prop
                 max="255"
                 step="1"
                 value={color.alpha}
-                className={styles.other}
+                className={styles.range}
                 onChange={handleAlphaChange}
             />
             <label className={styles.otherLabel}>Color</label>

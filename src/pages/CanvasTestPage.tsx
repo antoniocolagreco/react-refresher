@@ -8,10 +8,12 @@ import styles from './CanvasTestPage.module.css'
 
 const CanvasTestPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
     const { children, className, onResize, ...otherProps } = props
-    let previousCoords = useRef<Coords>()
+    const previousCoords = useRef<Coords>()
     const canvasRef = useRef<HTMLCanvasElement>(null)
-    let currentColorRef = useRef<string>('#ff0000ff')
-    let currentSizeRef = useRef<number>(5)
+    const currentColorRef = useRef<string>('#ff0000ff')
+    const currentSizeRef = useRef<number>(5)
+    const canvasImageElement = useRef<HTMLImageElement | null>(null)
+    const resizeTimeoutID = useRef<NodeJS.Timeout | null>(null)
 
     useEffect(() => {
         const canvas = getCanvas()
@@ -19,7 +21,6 @@ const CanvasTestPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
         canvas.addEventListener('click', handleClick)
         canvas.addEventListener('mousemove', handleMove)
         canvas.addEventListener('dblclick', clearCanvas)
-
         handleResize()
     }, [])
 
@@ -97,10 +98,37 @@ const CanvasTestPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 
     const handleResize = () => {
         const canvas = getCanvas()
-        const parent = canvas.parentElement
-        if (!parent) throw new Error('Canvas parent is null')
-        canvas.width = parent.clientWidth
-        canvas.height = parent.clientHeight
+        const context = getContext()
+
+        if (canvasImageElement.current === null) {
+            const newImage = new Image()
+            newImage.src = canvas.toDataURL()
+            canvasImageElement.current = newImage
+        }
+
+        if (resizeTimeoutID.current) {
+            clearTimeout(resizeTimeoutID.current)
+        }
+
+        resizeTimeoutID.current = setTimeout(() => {
+            const parent = canvas.parentElement
+            if (!parent) throw new Error('Canvas parent is null')
+            canvas.width = parent.clientWidth
+            canvas.height = parent.clientHeight
+            if (!canvasImageElement.current) throw new Error('Cnvas Image Data parent is null')
+            context.drawImage(
+                canvasImageElement.current,
+                0,
+                0,
+                canvasImageElement.current.width,
+                canvasImageElement.current.height,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            )
+            canvasImageElement.current = null
+        }, 500)
     }
 
     const getCanvas = (): HTMLCanvasElement => {
