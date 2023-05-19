@@ -1,80 +1,83 @@
 import classes from '@utils/classes'
-import { FC, HTMLAttributes, useEffect, useRef } from 'react'
+import { ChangeEvent, FC, HTMLAttributes, KeyboardEvent, useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import ColorPicker from '../components/colorPicker/ColorPicker'
-import { Circle, Coords, Line, Rect } from '../types/geometry'
-import { ColorToRGBA } from '../utils/Colors'
+import InputRange from '../components/inputRange/InputRange'
+import { Color } from '../types/Color'
+import { Coords } from '../types/geometry'
+
+import { ColorToRGB, RGBAToColor } from '../utils/Colors'
+import { drawCircle, drawLine, drawRect } from '../utils/drawing'
 import styles from './CanvasTestPage.module.css'
 
+const HEX_COLOR_REGEX =
+    /^#([a-fA-F0-9]{3}){1,2}$|^#([a-fA-F0-9]{4}){1,2}$|^#([a-fA-F0-9]{6}){1,2}$|^#([a-fA-F0-9]{8}){1,2}$/
+
 const CanvasTestPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
+    const [colorInputString, setColorInputString] = useState('#ff0000ff')
+
+    const [selecteColor, setSelectedColor] = useState<string>('#ff0000')
+    const [selectedAlpha, setSelectedAlpha] = useState<number>(255)
+    const [selectedSize, setSelectedSize] = useState<number>(5)
+
     const { children, className, onResize, ...otherProps } = props
     const previousCoords = useRef<Coords>()
-    const canvasRef = useRef<HTMLCanvasElement>(null)
-    const currentColorRef = useRef<string>('#ff0000ff')
-    const currentSizeRef = useRef<number>(5)
-    const canvasImageElement = useRef<HTMLImageElement | null>(null)
+    const mainCanvasRef = useRef<HTMLCanvasElement>(null)
+    const actionCanvasRef = useRef<HTMLCanvasElement>(null)
+    const canvasBackup = useRef<HTMLImageElement | null>(null)
     const resizeTimeoutID = useRef<NodeJS.Timeout | null>(null)
 
     useEffect(() => {
-        const canvas = getCanvas()
+        const actionCanvas = getActionCanvas()
         window.addEventListener('resize', handleResize)
-        canvas.addEventListener('click', handleClick)
-        canvas.addEventListener('mousemove', handleMove)
-        canvas.addEventListener('dblclick', clearCanvas)
+        actionCanvas.addEventListener('dblclick', clearCanvas)
+
+        clearCanvas()
         handleResize()
+        return () => {
+            window.removeEventListener('resize', handleResize)
+            actionCanvas.removeEventListener('dblclick', clearCanvas)
+        }
     }, [])
 
-    const drawCircle = (ctx: CanvasRenderingContext2D, c: Circle) => {
-        if (c.fillColor) ctx.fillStyle = c.fillColor
-        if (c.strokeColor) ctx.strokeStyle = c.strokeColor
-        if (c.lineWidth) ctx.lineWidth = c.lineWidth
-        ctx.beginPath()
-        ctx.arc(c.x, c.y, c.radius, 0, Math.PI * 2)
-        ctx.imageSmoothingEnabled = true
-        ctx.imageSmoothingQuality = 'high'
-        if (c.fillColor) ctx.fill()
-        if (c.strokeColor) ctx.stroke()
-    }
+    useEffect(() => {
+        const actionCanvas = getActionCanvas()
+        actionCanvas.addEventListener('mousedown', handleClick)
+        actionCanvas.addEventListener('mousemove', handleMove)
 
-    const drawRect = (ctx: CanvasRenderingContext2D, r: Rect) => {
-        if (r.fillColor) ctx.fillStyle = r.fillColor
-        if (r.strokeColor) ctx.strokeStyle = r.strokeColor
-        if (r.lineWidth) ctx.lineWidth = r.lineWidth
-        ctx.beginPath()
-        ctx.rect(r.x, r.y, r.width, r.height)
-        ctx.imageSmoothingEnabled = true
-        ctx.imageSmoothingQuality = 'high'
-        if (r.fillColor) ctx.fill()
-        if (r.strokeColor) ctx.stroke()
-    }
+        setColorInputString(`${selecteColor}${selectedAlpha.toString(16).padStart(2, '0')}`)
 
-    const drawLine = (ctx: CanvasRenderingContext2D, l: Line) => {
-        ctx.beginPath()
-        ctx.lineCap = 'round'
-        ctx.strokeStyle = l.strokeColor
-        ctx.lineWidth = l.lineWidth
-        ctx.moveTo(l.x1, l.y1)
-        ctx.lineTo(l.x2, l.y2)
-        ctx.imageSmoothingEnabled = true
-        ctx.imageSmoothingQuality = 'high'
-        ctx.stroke()
-    }
+        return () => {
+            actionCanvas.removeEventListener('click', handleClick)
+            actionCanvas.removeEventListener('mousemove', handleMove)
+        }
+    }, [selecteColor, selectedSize])
+
+    useEffect(() => {
+        const actionCanvas = getActionCanvas()
+        actionCanvas.addEventListener('mouseup', linearInterpolation)
+        setColorInputString(`${selecteColor}${selectedAlpha.toString(16).padStart(2, '0')}`)
+
+        return () => {
+            actionCanvas.removeEventListener('mouseup', linearInterpolation)
+        }
+    }, [selectedAlpha])
 
     const handleClick = (ev: MouseEvent) => {
-        const ctx = getContext()
+        const ctx = getActionContext()
         const x = ev.offsetX
         const y = ev.offsetY
         drawCircle(ctx, {
             x: x,
             y: y,
-            fillColor: currentColorRef.current,
+            fillColor: selecteColor,
             lineWidth: 0,
-            radius: currentSizeRef.current / 2,
+            radius: selectedSize / 2,
         })
     }
 
     const handleMove = (ev: MouseEvent) => {
-        const ctx = getContext()
+        const ctx = getActionContext()
         const x = ev.offsetX
         const y = ev.offsetY
         if (ev.buttons === 1) {
@@ -83,27 +86,29 @@ const CanvasTestPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
                 y1: getPreviousCoords().y,
                 x2: x,
                 y2: y,
-                lineWidth: currentSizeRef.current,
-                strokeColor: currentColorRef.current,
+                lineWidth: selectedSize,
+                strokeColor: selecteColor,
             })
         }
         previousCoords.current = { x, y }
     }
 
     const clearCanvas = () => {
-        const canvas = getCanvas()
-        const ctx = getContext()
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        const mainCanvas = getMainCanvas()
+        const mainContext = getMainContext()
+        // mainContext.clearRect(0, 0, mainCanvas.width, mainCanvas.height)
+        drawRect(mainContext, { x: 0, y: 0, width: mainCanvas.width, height: mainCanvas.height, fillColor: '#ffff' })
     }
 
     const handleResize = () => {
-        const canvas = getCanvas()
-        const context = getContext()
+        const actionCanvas = getActionCanvas()
+        const mainCanvas = getMainCanvas()
+        const mainContext = getMainContext()
 
-        if (canvasImageElement.current === null) {
+        if (canvasBackup.current === null) {
             const newImage = new Image()
-            newImage.src = canvas.toDataURL()
-            canvasImageElement.current = newImage
+            newImage.src = mainCanvas.toDataURL()
+            canvasBackup.current = newImage
         }
 
         if (resizeTimeoutID.current) {
@@ -111,36 +116,88 @@ const CanvasTestPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
         }
 
         resizeTimeoutID.current = setTimeout(() => {
-            const parent = canvas.parentElement
+            const parent = mainCanvas.parentElement
             if (!parent) throw new Error('Canvas parent is null')
-            canvas.width = parent.clientWidth
-            canvas.height = parent.clientHeight
-            if (!canvasImageElement.current) throw new Error('Cnvas Image Data parent is null')
-            context.drawImage(
-                canvasImageElement.current,
+            mainCanvas.width = parent.clientWidth
+            mainCanvas.height = parent.clientHeight
+            actionCanvas.width = parent.clientWidth
+            actionCanvas.height = parent.clientHeight
+            if (!canvasBackup.current) throw new Error('Canvas backup is null')
+            mainContext.drawImage(
+                canvasBackup.current,
                 0,
                 0,
-                canvasImageElement.current.width,
-                canvasImageElement.current.height,
+                canvasBackup.current.width,
+                canvasBackup.current.height,
                 0,
                 0,
-                canvas.width,
-                canvas.height
+                mainCanvas.width,
+                mainCanvas.height
             )
-            canvasImageElement.current = null
+            canvasBackup.current = null
         }, 500)
     }
 
-    const getCanvas = (): HTMLCanvasElement => {
-        const canvas = canvasRef.current
-        if (!canvas) throw new Error('Canvas is null')
-        return canvas
+    const linearInterpolation = () => {
+        const mainCanvas = getMainCanvas()
+        const mainContext = getMainContext()
+        const actionCanvas = getActionCanvas()
+        const actionContext = getActionContext()
+
+        const mainImageData = mainContext.getImageData(0, 0, mainCanvas.width, mainCanvas.height)
+        const actionImageData = actionContext.getImageData(0, 0, actionCanvas.width, actionCanvas.height)
+
+        const mainPixelData = mainImageData.data
+        const actionPixelData = actionImageData.data
+        const combinedData = new Uint8ClampedArray(mainPixelData.length)
+
+        for (let i = 0; i < mainPixelData.length; i += 4) {
+            const mainRed = mainPixelData[i]
+            const mainGreen = mainPixelData[i + 1]
+            const mainBlue = mainPixelData[i + 2]
+            const mainAlpha = mainPixelData[i + 3]
+
+            const actionRed = actionPixelData[i]
+            const actionGreen = actionPixelData[i + 1]
+            const actionBlue = actionPixelData[i + 2]
+            const actionAlpha = actionPixelData[i + 3]
+
+            const alpha = (actionAlpha / 255) * (selectedAlpha / 255)
+
+            combinedData[i] = mainRed * (1 - alpha) + actionRed * alpha // Red
+            combinedData[i + 1] = mainGreen * (1 - alpha) + actionGreen * alpha // Green
+            combinedData[i + 2] = mainBlue * (1 - alpha) + actionBlue * alpha // Blue
+            combinedData[i + 3] = mainAlpha
+        }
+
+        const combinedImageData = new ImageData(combinedData, mainCanvas.width, mainCanvas.height)
+
+        mainContext.putImageData(combinedImageData, 0, 0)
+        actionContext.clearRect(0, 0, actionCanvas.width, actionCanvas.height)
     }
-    const getContext = (): CanvasRenderingContext2D => {
-        const canvas = getCanvas()
-        const ctx = canvas.getContext('2d')
-        if (!ctx) throw new Error('Context is null')
-        return ctx
+
+    const getActionCanvas = (): HTMLCanvasElement => {
+        const actionCanvas = actionCanvasRef.current
+        if (!actionCanvas) throw new Error('ActionCanvas is null')
+        return actionCanvas
+    }
+    const getActionContext = (): CanvasRenderingContext2D => {
+        const actionCanvas = getActionCanvas()
+        const actionContext = actionCanvas.getContext('2d')
+        if (!actionContext) throw new Error('Actioin context is null')
+        return actionContext
+    }
+
+    const getMainCanvas = (): HTMLCanvasElement => {
+        const mainCanvas = mainCanvasRef.current
+        if (!mainCanvas) throw new Error('Main canvas is null')
+        return mainCanvas
+    }
+    const getMainContext = (): CanvasRenderingContext2D => {
+        const mainCanvas = getMainCanvas()
+        const mainContext = mainCanvas.getContext('2d')
+        if (!mainContext) throw new Error('Main context is null')
+        return mainContext
     }
 
     const getPreviousCoords = (): Coords => {
@@ -149,23 +206,87 @@ const CanvasTestPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
         return prevCords
     }
 
+    const handleSizeChange = (ev: ChangeEvent<HTMLInputElement>) => {
+        const newSize = parseInt(ev.target.value, 10)
+        setSelectedSize(newSize)
+    }
+
+    const handleAlphaChange = (ev: ChangeEvent<HTMLInputElement>) => {
+        const alpha = parseInt(ev.target.value, 10)
+        setSelectedAlpha(alpha)
+    }
+
+    const handleColorInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
+        const newColor = ev.currentTarget.value
+        setColorInputString(newColor)
+    }
+
+    const handleColorInputKeyUp = (ev: KeyboardEvent<HTMLInputElement>) => {
+        const inputValue = ev.currentTarget.value
+        if (ev.key !== 'Enter') return
+        if (!inputValue.match(HEX_COLOR_REGEX)) {
+            setColorInputString(`${selecteColor}${selectedAlpha.toString(16)}`)
+            return
+        }
+        setColorInputString(inputValue)
+        const { red, green, blue, alpha } = RGBAToColor(inputValue)
+        setSelectedColor(ColorToRGB({ red, green, blue }))
+        setSelectedAlpha(alpha)
+    }
+
+    const handleColorChange = (c: Color) => {
+        const newColor = ColorToRGB(c)
+        setSelectedColor(newColor)
+    }
+
     return (
         <div className={classes(styles.canvasTestPage, className)} {...otherProps}>
             <Helmet>
-                <title>Canvas Test</title>
+                <title>ActionCanvas Test</title>
             </Helmet>
-            <ColorPicker
-                defaultColor={currentColorRef.current}
-                onColorChange={(color) => {
-                    currentColorRef.current = ColorToRGBA(color)
-                }}
-                onSizeChange={(size) => {
-                    currentSizeRef.current = size
-                }}
-                className={styles.colorPicker}
-            />
+            <div className={styles.controls}>
+                <ColorPicker color={selecteColor} onColorChange={handleColorChange} className={styles.colorPicker} />
+                <div className={styles.inputs}>
+                    <label className={styles.otherLabel}>Size</label>
+                    <InputRange
+                        min="1"
+                        max="100"
+                        step="1"
+                        value={selectedSize}
+                        className={styles.range}
+                        onChange={handleSizeChange}
+                    />
+                    <label className={styles.otherLabel}>Alpha</label>
+                    <InputRange
+                        min="0"
+                        max="255"
+                        step="1"
+                        value={selectedAlpha}
+                        className={styles.range}
+                        onChange={handleAlphaChange}
+                    />
+                    <label className={styles.otherLabel}>Color</label>
+                    <input
+                        type="text"
+                        value={colorInputString}
+                        className={styles.inputColor}
+                        maxLength={9}
+                        minLength={4}
+                        required
+                        onChange={handleColorInputChange}
+                        onKeyUp={handleColorInputKeyUp}
+                    />
+                </div>
+                <div className={styles.currentColorContainer}>
+                    <div
+                        className={styles.currentColor}
+                        style={{ backgroundColor: selecteColor, opacity: selectedAlpha / 255 }}
+                    />
+                </div>
+            </div>
             <div className={styles.frame}>
-                <canvas ref={canvasRef} className={styles.canvas_1} />
+                <canvas ref={mainCanvasRef} className={styles.canvas} />
+                <canvas ref={actionCanvasRef} className={styles.canvas} style={{ opacity: selectedAlpha / 255 }} />
             </div>
         </div>
     )

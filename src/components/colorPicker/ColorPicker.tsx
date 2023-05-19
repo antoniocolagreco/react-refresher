@@ -1,11 +1,8 @@
 import classes from '@utils/classes'
-import { ChangeEvent, FC, HTMLAttributes, KeyboardEvent, useEffect, useRef, useState } from 'react'
-import Color from '../../types/Color'
-import { ColorToRGB, ColorToRGBA, RGBAToColor, changeHueOfRGB, changeSaturationOfRGB } from '../../utils/Colors'
+import { FC, HTMLAttributes, useEffect, useRef, useState } from 'react'
+import { Color } from '../../types/Color'
+import { ColorToRGB, RGBAToColor, changeHueOfRGB, changeSaturationOfRGB } from '../../utils/Colors'
 import styles from './ColorPicker.module.css'
-
-const HEX_COLOR_REGEX =
-    /^#([a-fA-F0-9]{3}){1,2}$|^#([a-fA-F0-9]{4}){1,2}$|^#([a-fA-F0-9]{6}){1,2}$|^#([a-fA-F0-9]{8}){1,2}$/
 
 enum Palette {
     red_s = '#f00f',
@@ -27,45 +24,53 @@ const WHITE = '#ffff'
 // const MAGENTA = '#f0ff'
 
 type ColorPickerProps = {
-    defaultColor?: string
+    color?: string
     onColorChange?: ((color: Color) => {} | void) | (() => {} | void)
-    onSizeChange?: ((size: number) => {} | void) | (() => {} | void)
 }
 
 const ColorPicker: FC<HTMLAttributes<HTMLDivElement> & ColorPickerProps> = (props) => {
-    const { defaultColor = '#333f', onColorChange, onSizeChange, children, className, ...otherProps } = props
+    const { color: inputColor = '#333f', onColorChange, children, className, ...otherProps } = props
 
-    const [color, setColor] = useState<Color>(RGBAToColor(defaultColor))
-    const [hexColorInput, setHexColorInput] = useState<string>(defaultColor)
-    const [size, setSize] = useState<number>(5)
-    const hueRGBRef = useRef<Color>(RGBAToColor(defaultColor))
-    const saturationRGBRef = useRef<Color>(RGBAToColor(defaultColor))
-    const luminosityRGBRef = useRef<Color>(RGBAToColor(defaultColor))
+    const [color, setColor] = useState<Color>(RGBAToColor(inputColor))
+
+    const hueRGBRef = useRef<Color>(RGBAToColor(inputColor))
+    const saturationRGBRef = useRef<Color>(RGBAToColor(inputColor))
+    const luminosityRGBRef = useRef<Color>(RGBAToColor(inputColor))
+
     const hueCanvasRef = useRef<HTMLCanvasElement>(null)
     const saturationCanvasRef = useRef<HTMLCanvasElement>(null)
     const luminosityCanvasRef = useRef<HTMLCanvasElement>(null)
 
     useEffect(() => {
-        const hueCanvas = getHueCanvas()
-        const luminosityCanvas = getLuminosityCanvas()
-        const saturationCanvas = getSaturationCanvas()
         window.addEventListener('resize', drawOnCanvas)
-        hueCanvas.addEventListener('click', handleHueCanvasClick)
+
+        const hueCanvas = getHueCanvas()
+        hueCanvas.addEventListener('mousedown', handleHueCanvasClick)
         hueCanvas.addEventListener('mousemove', handleHueCanvasClick)
-        saturationCanvas.addEventListener('click', handleSaturationCanvasClick)
+
+        const saturationCanvas = getSaturationCanvas()
+        saturationCanvas.addEventListener('mousedown', handleSaturationCanvasClick)
         saturationCanvas.addEventListener('mousemove', handleSaturationCanvasClick)
-        luminosityCanvas.addEventListener('click', handleLuminosityCanvasClick)
+
+        const luminosityCanvas = getLuminosityCanvas()
+        luminosityCanvas.addEventListener('mousedown', handleLuminosityCanvasClick)
         luminosityCanvas.addEventListener('mousemove', handleLuminosityCanvasClick)
+
         drawOnCanvas()
+
+        return () => {
+            hueCanvas.removeEventListener('mousedown', handleHueCanvasClick)
+            hueCanvas.removeEventListener('mousemove', handleHueCanvasClick)
+            saturationCanvas.removeEventListener('mousedown', handleSaturationCanvasClick)
+            saturationCanvas.removeEventListener('mousemove', handleSaturationCanvasClick)
+            luminosityCanvas.removeEventListener('mousedown', handleLuminosityCanvasClick)
+            luminosityCanvas.removeEventListener('mousemove', handleLuminosityCanvasClick)
+        }
     }, [])
 
     useEffect(() => {
         if (onColorChange) onColorChange(color)
     }, [color])
-
-    useEffect(() => {
-        if (onSizeChange) onSizeChange(size)
-    }, [size])
 
     const drawOnCanvas = () => {
         redrawHueCanvas()
@@ -101,7 +106,6 @@ const ColorPicker: FC<HTMLAttributes<HTMLDivElement> & ColorPickerProps> = (prop
             const saturationContext = getSaturationContext()
             const gradient = saturationContext.createLinearGradient(0, 0, saturationCanvas.width, 0)
             const desaturatedColor = changeSaturationOfRGB(hueRGBRef.current, {
-                alpha: 255,
                 blue: 255,
                 green: 255,
                 red: 255,
@@ -152,7 +156,7 @@ const ColorPicker: FC<HTMLAttributes<HTMLDivElement> & ColorPickerProps> = (prop
         }
 
         const [red, green, blue] = hueContext.getImageData(x, y, 1, 1).data
-        const newHue: Color = { red, green, blue, alpha: hueRGBRef.current.alpha }
+        const newHue: Color = { red, green, blue }
         hueRGBRef.current = newHue
 
         const newSaturationColor = changeHueOfRGB(saturationRGBRef.current, newHue)
@@ -174,7 +178,7 @@ const ColorPicker: FC<HTMLAttributes<HTMLDivElement> & ColorPickerProps> = (prop
         const y = ev.offsetY
         if (x < 0 || y < 0 || x > luminosityCanvas.width - 1 || y > luminosityCanvas.height - 1) return
         const [red, green, blue] = luminosityContext.getImageData(x, y, 1, 1).data
-        const newLuminosity: Color = { red, green, blue, alpha: luminosityRGBRef.current.alpha }
+        const newLuminosity: Color = { red, green, blue }
         luminosityRGBRef.current = newLuminosity
         redrawSaturationCanvas()
         setColor(newLuminosity)
@@ -188,7 +192,7 @@ const ColorPicker: FC<HTMLAttributes<HTMLDivElement> & ColorPickerProps> = (prop
         const y = ev.offsetY
         if (x < 0 || y < 0 || x > saturationCanvas.width - 1 || y > saturationCanvas.height - 1) return
         const [red, green, blue] = saturationContext.getImageData(x, y, 1, 1).data
-        const newSaturation: Color = { red, green, blue, alpha: saturationRGBRef.current.alpha }
+        const newSaturation: Color = { red, green, blue }
         saturationRGBRef.current = newSaturation
         redrawLuminosityCanvas()
         setColor(newSaturation)
@@ -230,83 +234,20 @@ const ColorPicker: FC<HTMLAttributes<HTMLDivElement> & ColorPickerProps> = (prop
         return luminosityContext
     }
 
-    const handleSizeChange = (ev: ChangeEvent<HTMLInputElement>) => {
-        const newSize = parseInt(ev.target.value, 10)
-        setSize(newSize)
-    }
-
-    const handleAlphaChange = (ev: ChangeEvent<HTMLInputElement>) => {
-        const alpha = parseInt(ev.target.value, 10)
-        hueRGBRef.current.alpha = alpha
-        saturationRGBRef.current.alpha = alpha
-        luminosityRGBRef.current.alpha = alpha
-        setColor((selectedColor) => ({ ...selectedColor, alpha }))
-    }
-
-    const handleColorInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
-        const newColor = ev.currentTarget.value
-        setHexColorInput(newColor)
-    }
-
-    const handleColorInputKeyUp = (ev: KeyboardEvent<HTMLInputElement>) => {
-        const inputValue = ev.currentTarget.value
-        if (ev.key !== 'Enter') return
-        if (!inputValue.match(HEX_COLOR_REGEX)) {
-            setHexColorInput(ColorToRGBA(color))
-            return
-        }
-        const newColor = RGBAToColor(inputValue)
-        setColor(newColor)
-    }
-
     return (
         <div className={classes(styles.colorPicker, className)} {...otherProps}>
-            <label className={styles.canvasLabel}>Hue</label>
+            <label>Hue</label>
             <div className={styles.canvasContainer}>
                 <canvas ref={hueCanvasRef} />
             </div>
-            <label className={styles.canvasLabel}>Saturation</label>
+            <label>Saturation</label>
             <div className={styles.canvasContainer}>
                 <canvas ref={saturationCanvasRef} />
             </div>
-            <label className={styles.canvasLabel}>Luminosity</label>
+            <label>Luminosity</label>
             <div className={styles.canvasContainer}>
                 <canvas ref={luminosityCanvasRef} />
             </div>
-
-            <label className={styles.otherLabel}>Size</label>
-            <input
-                type="range"
-                min="1"
-                max="100"
-                step="1"
-                value={size}
-                className={styles.range}
-                onChange={handleSizeChange}
-            />
-            <label className={styles.otherLabel}>Alpha</label>
-            <input
-                type="range"
-                min="0"
-                max="255"
-                step="1"
-                value={color.alpha}
-                className={styles.range}
-                onChange={handleAlphaChange}
-            />
-            <label className={styles.otherLabel}>Color</label>
-            <input
-                type="text"
-                value={hexColorInput}
-                className={styles.inputColor}
-                maxLength={9}
-                minLength={4}
-                required
-                onChange={handleColorInputChange}
-                onKeyUp={handleColorInputKeyUp}
-            />
-
-            <div className={styles.currentColor} style={{ backgroundColor: ColorToRGBA(color) }} />
         </div>
     )
 }

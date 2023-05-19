@@ -1,8 +1,9 @@
-type Color = {
+export type Color = {
     red: number
     green: number
     blue: number
-    alpha?: number | undefined
 }
 
-export default Color
+export type AlphaColor = Color & {
+    alpha: number
+}

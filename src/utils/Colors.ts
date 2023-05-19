@@ -1,11 +1,11 @@
-import Color from '../types/Color'
+import { AlphaColor, Color } from '../types/Color'
 
-export const RGBAToColor = (input: string): Color => {
+export const RGBAToColor = (input: string): AlphaColor => {
     const value = input.replace('#', '')
-    let red: number = 255
-    let green: number = 255
-    let blue: number = 255
-    let alpha: number = 255
+    let red = 255
+    let green = 255
+    let blue = 255
+    let alpha = 255
 
     switch (value.length) {
         case 3:
@@ -33,7 +33,12 @@ export const RGBAToColor = (input: string): Color => {
     return { red, green, blue, alpha }
 }
 
-export const ColorToRGBA = (color: Color) => {
+export const RGBToColor = (input: string): Color => {
+    const { red, green, blue } = RGBAToColor(input)
+    return { red, green, blue }
+}
+
+export const ColorToRGBA = (color: AlphaColor) => {
     const result = `#${color.red.toString(16).padStart(2, '0')}${color.green.toString(16).padStart(2, '0')}${color.blue
         .toString(16)
         .padStart(2, '0')}${color.alpha && color.alpha.toString(16).padStart(2, '0')}`
@@ -43,7 +48,7 @@ export const ColorToRGBA = (color: Color) => {
 export const ColorToRGB = (color: Color) => {
     const result = `#${color.red.toString(16).padStart(2, '0')}${color.green.toString(16).padStart(2, '0')}${color.blue
         .toString(16)
-        .padStart(2, '0')}ff`
+        .padStart(2, '0')}`
     return result
 }
 
@@ -51,24 +56,21 @@ export const changeHueOfRGB = (color: Color, targetColor: Color): Color => {
     const [, saturation, luminosity] = convertRGBtoHSL(color.red, color.green, color.blue)
     const [targetHue, ,] = convertRGBtoHSL(targetColor.red, targetColor.green, targetColor.blue)
     const [red, green, blue] = convertHSLtoRGB(targetHue, saturation, luminosity)
-    const alpha = color.alpha ? color.alpha : 255
-    return { red, green, blue, alpha }
+    return { red, green, blue }
 }
 
 export const changeSaturationOfRGB = (color: Color, targetColor: Color): Color => {
     const [hue, , luminosity] = convertRGBtoHSL(color.red, color.green, color.blue)
     const [, targetSaturation] = convertRGBtoHSL(targetColor.red, targetColor.green, targetColor.blue)
     const [red, green, blue] = convertHSLtoRGB(hue, targetSaturation, luminosity)
-    const alpha = color.alpha ? color.alpha : 255
-    return { red, green, blue, alpha }
+    return { red, green, blue }
 }
 
 export const changeLuminosityOfRGB = (color: Color, targetColor: Color): Color => {
     const [hue, saturation] = convertRGBtoHSL(color.red, color.green, color.blue)
     const [, , targetLuminosity] = convertRGBtoHSL(targetColor.red, targetColor.green, targetColor.blue)
     const [red, green, blue] = convertHSLtoRGB(hue, saturation, targetLuminosity)
-    const alpha = color.alpha ? color.alpha : 255
-    return { red, green, blue, alpha }
+    return { red, green, blue }
 }
 
 export const convertRGBtoHSL = (red: number, green: number, blue: number): [number, number, number] => {
