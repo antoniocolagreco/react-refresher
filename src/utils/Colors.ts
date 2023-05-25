@@ -52,23 +52,37 @@ export const ColorToRGB = (color: Color) => {
     return result
 }
 
-export const changeHueOfRGB = (color: Color, targetColor: Color): Color => {
+export const copyHueFromTargetColor = (color: Color, targetColor: Color): Color => {
     const [, saturation, luminosity] = convertRGBtoHSL(color.red, color.green, color.blue)
     const [targetHue, ,] = convertRGBtoHSL(targetColor.red, targetColor.green, targetColor.blue)
     const [red, green, blue] = convertHSLtoRGB(targetHue, saturation, luminosity)
     return { red, green, blue }
 }
 
-export const changeSaturationOfRGB = (color: Color, targetColor: Color): Color => {
+export const copySaturationFromTargetColor = (color: Color, targetColor: Color): Color => {
     const [hue, , luminosity] = convertRGBtoHSL(color.red, color.green, color.blue)
     const [, targetSaturation] = convertRGBtoHSL(targetColor.red, targetColor.green, targetColor.blue)
     const [red, green, blue] = convertHSLtoRGB(hue, targetSaturation, luminosity)
     return { red, green, blue }
 }
 
-export const changeLuminosityOfRGB = (color: Color, targetColor: Color): Color => {
+export const changeSaturationOfRGBColor = (color: Color, targetSaturation: number): Color => {
+    const [hue, , luminosity] = convertRGBtoHSL(color.red, color.green, color.blue)
+    if (targetSaturation > 100 || targetSaturation < 0) return color
+    const [red, green, blue] = convertHSLtoRGB(hue, targetSaturation, luminosity)
+    return { red, green, blue }
+}
+
+export const copyLuminosityFromTargetColor = (color: Color, targetColor: Color): Color => {
     const [hue, saturation] = convertRGBtoHSL(color.red, color.green, color.blue)
     const [, , targetLuminosity] = convertRGBtoHSL(targetColor.red, targetColor.green, targetColor.blue)
+    const [red, green, blue] = convertHSLtoRGB(hue, saturation, targetLuminosity)
+    return { red, green, blue }
+}
+
+export const changeLuminosityOfRGBColor = (color: Color, targetLuminosity: number): Color => {
+    const [hue, saturation] = convertRGBtoHSL(color.red, color.green, color.blue)
+    if (targetLuminosity > 100 || targetLuminosity < 0) return color
     const [red, green, blue] = convertHSLtoRGB(hue, saturation, targetLuminosity)
     return { red, green, blue }
 }

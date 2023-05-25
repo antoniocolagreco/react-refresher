@@ -1,0 +1,149 @@
+.colorsSchemePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.title {
+  color: var(--gray-7);
+  margin: 1rem 0;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.button {
+  padding-right: 1.5rem;
+}
+
+.icon {
+  fill: var(--gray-0);
+}
+
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5rem;
+  margin-bottom: 1rem;
+}
+
+.colorsGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+  width: 100%;
+  max-width: 55rem;
+}
+
+.color {
+  cursor: pointer;
+  border-radius: 0.4rem;
+  flex-grow: 1;
+  flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 6rem;
+  height: 6rem;
+  transition: all 0.2s;
+  border: 2px solid var(--gray-4);
+  border-radius: 1rem;
+}
+
+.colorText {
+  font-family: monospace;
+  letter-spacing: 1px;
+  font-size: large;
+  text-shadow: 0 0 5px black, 0 0 3px black;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: white;
+}
+
+.color:hover {
+  transform: scale(1.1);
+}
+
+.color:active {
+  transform: scale(0.9);
+}
+
+.colorsScheme {
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem 0rem var(--gray-5);
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.colorBar {
+  width: 18rem;
+  height: 3rem;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+
+/* //////////////////////////////// MOCK CARD //////////////////////////////// */
+
+
+.mock {
+  display: flex;
+  flex-direction: column;
+  width: 18rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0.5rem 1rem 0rem var(--gray-5);
+}
+
+.mock header {
+  padding: 1rem;
+}
+
+.mock main {
+  flex-grow: 1;
+  padding: 1rem;
+}
+
+.mock footer {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.mock>*>:is(h1, h2,
+  h3,
+  h4,
+  h5,
+  h6) {
+  margin: 0;
+}
+
+.mock p {}
+
+.mock button {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  line-height: 2rem;
+  padding: 0.25rem 1rem;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 100vw;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}

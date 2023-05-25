@@ -32,7 +32,7 @@ const NavigationBar: FC<HTMLAttributes<HTMLElement & NavigationBarProps>> = (pro
                     <NavBarLink to={`/${RoutePaths.CANVAS_TEST}`}>Canvas Test</NavBarLink>
                 </li>
                 <li className={styles.navBarListItem}>
-                    <NavBarLink to={`/${RoutePaths.COLOR_PALETTES}`}>Color Palettes</NavBarLink>
+                    <NavBarLink to={`/${RoutePaths.COLORS_SCHEME}`}>Colors Scheme</NavBarLink>
                 </li>
             </ul>
         </nav>

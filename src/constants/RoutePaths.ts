@@ -7,7 +7,7 @@ enum RoutePaths {
     USE_TRANSITION = 'use-transition',
     USE_REDUCER = 'use-reducer',
     CANVAS_TEST = 'canvas-test',
-    COLOR_PALETTES = 'color-palettes',
+    COLORS_SCHEME = 'colors-scheme',
 }
 
 export default RoutePaths

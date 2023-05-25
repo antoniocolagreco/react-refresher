@@ -9,7 +9,7 @@ import DefaultPageLayout from './components/layout/DefaultPageLayout'
 import MeetupsPageLayout from './components/layout/MeetupsPageLayout'
 import PagelessLayout from './components/layout/PagelessLayout'
 import CanvasTestPage from './pages/CanvasTestPage'
-import ColorPalettesPage from './pages/ColorPalettesPage'
+import ColorsSchemePage from './pages/ColorsSchemePage'
 import UseReducerPage from './pages/UseReducerPage'
 import UseTransitionPage from './pages/UseTransitionPage'
 
@@ -29,7 +29,7 @@ const App: FC<AppProps> = (props) => {
                     <Route path={RoutePaths.USE_TRANSITION} element={<UseTransitionPage />} />
                     <Route path={RoutePaths.USE_REDUCER} element={<UseReducerPage />} />
                     <Route path={RoutePaths.CANVAS_TEST} element={<CanvasTestPage />} />
-                    <Route path={RoutePaths.COLOR_PALETTES} element={<ColorPalettesPage />} />
+                    <Route path={RoutePaths.COLORS_SCHEME} element={<ColorsSchemePage />} />
                 </Route>
                 <Route element={<PagelessLayout />}>
                     <Route path="*" element={<ErrorPage />} />

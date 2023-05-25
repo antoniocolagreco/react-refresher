@@ -1,7 +1,7 @@
 import classes from '@utils/classes'
 import { FC, HTMLAttributes, useEffect, useRef, useState } from 'react'
 import { Color } from '../../types/Color'
-import { ColorToRGB, RGBAToColor, changeHueOfRGB, changeSaturationOfRGB } from '../../utils/Colors'
+import { ColorToRGB, RGBAToColor, copyHueFromTargetColor, copySaturationFromTargetColor } from '../../utils/Colors'
 import styles from './ColorPicker.module.css'
 
 enum Palette {
@@ -105,7 +105,7 @@ const ColorPicker: FC<HTMLAttributes<HTMLDivElement> & ColorPickerProps> = (prop
             saturationCanvas.height = parent.clientHeight
             const saturationContext = getSaturationContext()
             const gradient = saturationContext.createLinearGradient(0, 0, saturationCanvas.width, 0)
-            const desaturatedColor = changeSaturationOfRGB(hueRGBRef.current, {
+            const desaturatedColor = copySaturationFromTargetColor(hueRGBRef.current, {
                 blue: 255,
                 green: 255,
                 red: 255,
@@ -159,11 +159,11 @@ const ColorPicker: FC<HTMLAttributes<HTMLDivElement> & ColorPickerProps> = (prop
         const newHue: Color = { red, green, blue }
         hueRGBRef.current = newHue
 
-        const newSaturationColor = changeHueOfRGB(saturationRGBRef.current, newHue)
+        const newSaturationColor = copyHueFromTargetColor(saturationRGBRef.current, newHue)
         saturationRGBRef.current = newSaturationColor
         redrawSaturationCanvas()
 
-        const newLuminosityColor = changeHueOfRGB(luminosityRGBRef.current, newHue)
+        const newLuminosityColor = copyHueFromTargetColor(luminosityRGBRef.current, newHue)
         luminosityRGBRef.current = newLuminosityColor
         redrawLuminosityCanvas()
 

@@ -48,7 +48,7 @@ const CanvasTestPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
         setColorInputString(`${selecteColor}${selectedAlpha.toString(16).padStart(2, '0')}`)
 
         return () => {
-            actionCanvas.removeEventListener('click', handleClick)
+            actionCanvas.removeEventListener('mousedown', handleClick)
             actionCanvas.removeEventListener('mousemove', handleMove)
         }
     }, [selecteColor, selectedSize])
@@ -67,12 +67,13 @@ const CanvasTestPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
         const ctx = getActionContext()
         const x = ev.offsetX
         const y = ev.offsetY
+        const circleSize = selectedSize > 2 ? selectedSize / 2 : 1
         drawCircle(ctx, {
             x: x,
             y: y,
             fillColor: selecteColor,
             lineWidth: 0,
-            radius: selectedSize / 2,
+            radius: circleSize,
         })
     }
 
@@ -149,7 +150,7 @@ const CanvasTestPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 
         const mainPixelData = mainImageData.data
         const actionPixelData = actionImageData.data
-        const combinedData = new Uint8ClampedArray(mainPixelData.length)
+        const outputData = new Uint8ClampedArray(mainPixelData.length)
 
         for (let i = 0; i < mainPixelData.length; i += 4) {
             const mainRed = mainPixelData[i]
@@ -164,15 +165,15 @@ const CanvasTestPage: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 
             const alpha = (actionAlpha / 255) * (selectedAlpha / 255)
 
-            combinedData[i] = mainRed * (1 - alpha) + actionRed * alpha // Red
-            combinedData[i + 1] = mainGreen * (1 - alpha) + actionGreen * alpha // Green
-            combinedData[i + 2] = mainBlue * (1 - alpha) + actionBlue * alpha // Blue
-            combinedData[i + 3] = mainAlpha
+            outputData[i] = mainRed * (1 - alpha) + actionRed * alpha // Rosso
+            outputData[i + 1] = mainGreen * (1 - alpha) + actionGreen * alpha // Verde
+            outputData[i + 2] = mainBlue * (1 - alpha) + actionBlue * alpha // Blue
+            outputData[i + 3] = mainAlpha // Alpha
         }
 
-        const combinedImageData = new ImageData(combinedData, mainCanvas.width, mainCanvas.height)
+        const outputImageData = new ImageData(outputData, mainCanvas.width, mainCanvas.height)
 
-        mainContext.putImageData(combinedImageData, 0, 0)
+        mainContext.putImageData(outputImageData, 0, 0)
         actionContext.clearRect(0, 0, actionCanvas.width, actionCanvas.height)
     }
 
